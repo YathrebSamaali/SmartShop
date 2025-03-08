@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnalyticsController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/analytics', [AnalyticsController::class, 'predictSales'])->name('analytics.sales');
+Route::get('/recommend/{customer_id}', [AnalyticsController::class, 'recommendProducts'])->name('analytics.recommend');
