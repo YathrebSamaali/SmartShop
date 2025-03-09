@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'stock'];
+    protected $fillable = ['name', 'description', 'price', 'stock', 'image']; // Ajoutez 'image' ici
 
     // Relation avec OrderItem (un produit peut être dans plusieurs commandes)
     public function orderItems()
@@ -17,3 +17,4 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 }
+
