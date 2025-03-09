@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactController;
+use App\Models\Product;
+use App\Models\Contact;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +23,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-use App\Models\Product;
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
 
 Route::get('/', function () {
     // Récupérer tous les produits
@@ -30,5 +33,9 @@ Route::get('/', function () {
     // Retourner la vue avec les produits
     return view('welcome', compact('products'));
 });
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+
 
 require __DIR__.'/auth.php';
