@@ -17,29 +17,35 @@
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ url('/') }}" class="text-white text-xl font-semibold">
-                <img src="{{ asset('images/logo.png') }}" alt="SmartShop Logo" class="h-8 inline-block mr-2">
+                <img src="{{ asset('') }}" alt="SmartShop Logo" class="h-8 inline-block mr-2">
+
             </a>
 
             <!-- Authentication Links -->
             <div class="space-x-6">
                 @guest
-                    <a href="{{ route('login') }}" class="text-gray-300 hover:text-white">Login</a>
-                    <a href="{{ route('register') }}" class="text-gray-300 hover:text-white">Register</a>
+                    <a href="{{ route('login') }}" class="text-white hover:text-gray-300">Login</a>
+                    <a href="{{ route('register') }}" class="text-white hover:text-gray-300">Register</a>
                 @else
-                    <a href="{{ route('home') }}" class="text-gray-300 hover:text-white">Dashboard</a>
+                    <a href="{{ route('home') }}" class="text-white hover:text-gray-300">Dashboard</a>
                     <form action="{{ route('logout') }}" method="POST" class="inline-block">
                         @csrf
-                        <button type="submit" class="text-gray-300 hover:text-white">Logout</button>
+                        <button type="submit" class="text-white hover:text-gray-300">Logout</button>
                     </form>
                 @endguest
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section with Light Background -->
-    <div class="bg-gray-50 min-h-screen flex flex-col justify-center items-center text-center p-10">
-        <h1 class="text-5xl font-bold mb-4 text-gray-900">Welcome to SmartShop!</h1>
-        <p class="text-xl mb-6 text-gray-700">Your one-stop shop for all your needs.</p>
+    <!-- Hero Section with Background Image and Text/Image Layout -->
+    <div class="relative w-full h-screen bg-cover bg-center pt-12" style="background-image: url('{{ asset('images/slider-bg.jpg') }}');">
+        <div class="flex h-full items-center justify-between px-10 text-white">
+            <!-- Left Part: Title and Paragraph -->
+            <div class="w-1/2">
+                <h1 class="text-5xl font-bold mb-4">Welcome to SmartShop!</h1>
+                <p class="text-xl mb-6">Your one-stop shop for all your needs. Discover amazing products for all occasions, including fashion, gadgets, and more!</p>
+            </div>
+        </div>
     </div>
 
 </body>
