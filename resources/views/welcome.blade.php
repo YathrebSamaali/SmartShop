@@ -17,8 +17,7 @@
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ url('/') }}" class="text-white text-xl font-semibold">
-                <img src="{{ asset('') }}" alt="SmartShop Logo" class="h-8 inline-block mr-2">
-
+                <img src="{{ asset('images/samartshop_logo.png') }}" alt="SmartShop Logo" class="h-12 inline-block mr-2">
             </a>
 
             <!-- Authentication Links -->
@@ -38,15 +37,17 @@
     </nav>
 
     <!-- Hero Section with Background Image and Text/Image Layout -->
-    <div class="relative w-full h-screen bg-cover bg-center pt-12" style="background-image: url('{{ asset('images/slider-bg.jpg') }}');">
-        <div class="flex h-full items-center justify-between px-10 text-white">
-            <!-- Left Part: Title and Paragraph -->
-            <div class="w-1/2">
-                <h1 class="text-5xl font-bold mb-4">Welcome to SmartShop!</h1>
-                <p class="text-xl mb-6">Your one-stop shop for all your needs. Discover amazing products for all occasions, including fashion, gadgets, and more!</p>
-            </div>
+<div class="relative w-full h-screen bg-cover bg-center pt-12" style="background-image: url('{{ asset('images/test4.jpg') }}');">
+    <div class="flex h-full items-center justify-between px-10 text-white">
+        <!-- Left Part: Title and Paragraph -->
+        <div class="w-1/2 pl-24">
+            <h1 class="text-5xl font-bold mb-4" style="color: #543925;">Elevate Your Style with SmartShop</h1>
+            <p class="text-xl mb-6 text-gray-300">Discover the latest trends at SmartShop, where fashion meets comfort. From casual chic to elegant evening wear, we offer a wide range of stylish pieces that make you stand out. Shop with us and transform your wardrobe today!</p>
+            <a href="" class="inline-block px-6 py-2 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-all">See More</a>
         </div>
     </div>
+</div>
+
 
 </body>
 </html>
