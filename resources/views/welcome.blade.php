@@ -133,6 +133,53 @@
     </div>
 </section>
 
+<section class="services py-12 bg-gray-100">
+    <div class="container mx-auto px-6" style="padding-left: 150px; padding-right: 150px;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Free Shipping -->
+            <div class="service-item flex items-center justify-center bg-white p-6 rounded-lg shadow-lg">
+                <div class="text-center">
+                    <!-- Icône simple (truck) -->
+                    <span class="text-3xl mb-3">&#x1F69A;</span> <!-- Icône Unicode camion -->
+                    <h3 class="text-lg font-semibold">Free Shipping</h3>
+                    <p class="text-sm text-gray-500 mt-2">Suffered Alteration in Some Form</p>
+                </div>
+            </div>
+            
+            <!-- Cash on Delivery -->
+            <div class="service-item flex items-center justify-center bg-white p-6 rounded-lg shadow-lg">
+                <div class="text-center">
+                    <!-- Icône simple (money) -->
+                    <span class="text-3xl mb-3">&#x1F4B8;</span> <!-- Icône Unicode argent -->
+                    <h3 class="text-lg font-semibold">Cash on Delivery</h3>
+                    <p class="text-sm text-gray-500 mt-2">The Internet Tend To Repeat</p>
+                </div>
+            </div>
+            
+            <!-- 45 Days Return -->
+            <div class="service-item flex items-center justify-center bg-white p-6 rounded-lg shadow-lg">
+                <div class="text-center">
+                    <!-- Icône simple (retour) -->
+                    <span class="text-3xl mb-3">&#x21BB;</span> <!-- Icône Unicode retour -->
+                    <h3 class="text-lg font-semibold">45 Days Return</h3>
+                    <p class="text-sm text-gray-500 mt-2">Making it Look Like Readable</p>
+                </div>
+            </div>
+            
+            <!-- Opening All Week -->
+            <div class="service-item flex items-center justify-center bg-white p-6 rounded-lg shadow-lg">
+                <div class="text-center">
+                    <!-- Icône simple (clock) -->
+                    <span class="text-3xl mb-3">&#x1F551;</span> <!-- Icône Unicode horloge -->
+                    <h3 class="text-lg font-semibold">Opening All Week</h3>
+                    <p class="text-sm text-gray-500 mt-2">8AM - 09PM</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
     <!-- Footer Section -->
     @include('layouts.footer')
