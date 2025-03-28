@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Main Content -->
-<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 30px;">
+<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 20px;">
     <div class="container-fluid">
         <!-- Header Section -->
         <div class="d-flex justify-content-between align-items-start mb-5">
@@ -18,6 +18,66 @@
                     Add Product
                 </a>
                 <p class="text-muted small mt-2">Click to add a new product</p>
+            </div>
+        </div>
+
+        <!-- Search and Export Section -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <form method="GET" action="{{ route('admin.products.index') }}" class="mb-3">
+                    <div class="input-group" style="width: 350px;">
+                        <input type="text"
+                               name="search"
+                               class="form-control border-end-0"
+                               placeholder="Search products..."
+                               value="{{ request('search') }}"
+                               aria-label="Search">
+                        <button class="btn btn-outline-secondary border-start-0" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        @if(request('search'))
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary" title="Clear search">
+                            <i class="fas fa-times"></i>
+                        </a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-file-export mr-2"></i> Export
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="exportDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'csv']) }}">
+                                <i class="fas fa-file-csv text-primary mr-2"></i>
+                                <div>
+                                    <div>CSV</div>
+                                    <small class="text-muted">Comma separated values</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'excel']) }}">
+                                <i class="fas fa-file-excel text-success mr-2"></i>
+                                <div>
+                                    <div>Excel</div>
+                                    <small class="text-muted">XLSX format</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'pdf']) }}">
+                                <i class="fas fa-file-pdf text-danger mr-2"></i>
+                                <div>
+                                    <div>PDF</div>
+                                    <small class="text-muted">Portable document</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -48,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($products as $product)
+                        @forelse($products as $product)
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <!-- Product Image -->
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -94,8 +154,7 @@
                             </td>
 
                             <!-- Actions -->
-                              <!-- Actions -->
-                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-3">
                                     <!-- Edit Button -->
                                     <a href="{{ route('admin.products.edit', $product->id) }}"
@@ -121,7 +180,13 @@
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                No products found
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -145,5 +210,5 @@
             alertMessage.style.opacity = "0";
             setTimeout(() => alertMessage.style.display = "none", 500);
         }
-    }, 5000); // Disappears after 5 seconds
+    }, 2000); // Disappears after 5 seconds
 </script>

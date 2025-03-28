@@ -1,19 +1,31 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 30px;">
+<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 20px;">
     <div class="container-fluid">
         <div class="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto">
             <!-- Header with Title and Close Button -->
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Add a New User</h1>
+                <h1 class="h3 mb-1 text-gray-800">Add a New User</h1>
                 <a href="{{ route('admin.users.index') }}" class="text-blue-600 hover:text-blue-800">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </a>
             </div>
-
+            <div class="alert alert-info border-left-primary shadow-sm mb-4">
+    <div class="d-flex align-items-center">
+        <div>
+            <strong><i class="fas fa-lightbulb mr-2"></i> Quick Tips:</strong>
+            <ul class="mb-1 ps-3" style="list-style-type: circle;">
+            <li><strong>Password Requirements:</strong> Passwords must be at least 8 characters long</li>
+                            <li><strong>Administrators: </strong>Administrators have full system access</li>
+                            <li><strong>Email Validation: </strong> User emails must be unique and valid</li>
+                            <li><strong>Editing:</strong> You can edit user details later</li>
+            </ul>
+        </div>
+    </div>
+</div>
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
 
