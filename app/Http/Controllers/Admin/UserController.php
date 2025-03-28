@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 class UserController extends Controller
 {
     // Afficher tous les utilisateurs
@@ -69,6 +71,21 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur mis à jour avec succès');
     }
 
+    public function export($format)
+    {
+        switch ($format) {
+            case 'csv':
+                return Excel::download(new UsersExport, 'users.csv');
+            case 'excel':
+                return Excel::download(new UsersExport, 'users.xlsx');
+            case 'pdf':
+                $users = User::all();
+                $pdf = PDF::loadView('admin.users.export_pdf', compact('users'));
+                return $pdf->download('users.pdf');
+            default:
+                abort(404, 'Format non supporté');
+        }
+    }
     // Supprimer un utilisateur
     public function destroy($id)
     {

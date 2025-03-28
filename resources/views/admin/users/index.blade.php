@@ -11,12 +11,31 @@
                 <p class="text-gray-600 mb-0">Complete list of registered users</p>
             </div>
             <div class="text-right">
-                <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-inline-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" width="18">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    Add User
-                </a>
+                <div class="d-flex align-items-center">
+                    <!-- Export Button -->
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-file-export"></i> Exporter
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'csv') }}"><i class="fas fa-file-csv"></i> Export CSV</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'excel') }}"><i class="fas fa-file-excel"></i> Export Excel</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'pdf') }}"><i class="fas fa-file-pdf"></i> Export PDF</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Add User Button -->
+                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-inline-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" width="18">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                        Add User
+                    </a>
+                </div>
                 <p class="text-muted small mt-2">Click to create a new user</p>
             </div>
         </div>
@@ -43,8 +62,8 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th> <!-- Added Details field -->
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last</th> <!-- Added Last field -->
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -84,15 +103,15 @@
 
                             <!-- Details -->
                             <td class="px-6 py-4 whitespace-nowrap">
-    <a href="{{ route('admin.users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900">Registered on {{ $user->created_at->format('d/m/Y') }}</a>
-</td>
+                                <a href="{{ route('admin.users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900">Registered on {{ $user->created_at->format('d/m/Y') }}</a>
+                            </td>
 
                             <!-- Last visit (last login) -->
                             <td class="px-6 py-4 whitespace-nowrap">
-    <div class="text-sm text-gray-900">
-        {{ $user->last_login ? \Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i') : 'Never' }}
-    </div>
-</td>
+                                <div class="text-sm text-gray-900">
+                                    {{ $user->last_login ? \Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i') : 'Never' }}
+                                </div>
+                            </td>
 
                             <!-- Actions -->
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -136,4 +155,16 @@
     </div>
 </div>
 @endsection
+<!-- Bootstrap JS (assurez-vous qu'il est bien chargé) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+    setTimeout(function() {
+        let alertMessage = document.getElementById('alert-message');
+        if (alertMessage) {
+            alertMessage.style.transition = "opacity 0.5s";
+            alertMessage.style.opacity = "0";
+            setTimeout(() => alertMessage.style.display = "none", 500);
+        }
+    }, 5000); // Disappears after 5 seconds
+</script>
