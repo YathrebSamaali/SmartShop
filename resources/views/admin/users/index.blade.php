@@ -14,7 +14,106 @@
     </div>
 
     <div class="d-flex align-items-center">
+<!-- Search Form with Icons -->
+<!-- Search Form Professionnelle avec Recherche Instantanée -->
+<form method="GET" action="{{ route('admin.users.index') }}" class="d-flex align-items-center mt-3">
+    <div class="input-group search-container" style="width: 300px;">
+        <span class="input-group-text ">
+            <i class="fas fa-search text-secondary"></i>
+        </span>
+        <input type="text"
+               name="search"
+               class="form-control border-start-0 ps-2 py-2"
+               placeholder="Rechercher utilisateur..."
+               value="{{ request('search') }}"
+               aria-label="Search"
+               id="instantSearchInput"
+               style="border-radius: 0 4px 4px 0;">
+        @if(request('search'))
+        <a href="{{ route('admin.users.index') }}"
+   class="input-group-text bg-transparent clear-search-btn"
+   title="Effacer la recherche">
 
+
+</a>
+        @endif
+    </div>
+</form>
+
+<style>
+.search-container {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #212529; /* Bordure noire */
+    overflow: hidden; /* Pour contenir les bordures internes */
+    margin-right: 12px;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #212529; /* Maintien de la bordure noire au focus */
+    outline: 2px solid #a0c4ff; /* Ajout d'un contour bleu pour le focus */
+}
+
+.form-control {
+    font-size: 0.95rem;
+    height: 40px;
+    border: 1px solid #212529 !important; /* Bordure noire */
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #212529 !important; /* Maintien au focus */
+}
+
+
+
+.input-group-text {
+    background-color: #fff !important;
+    border: 1px solid #212529 !important; /* Bordure noire */
+    border-right: none !important;
+    padding: 0 12px;
+    transition: all 0.25s ease;
+}
+
+.fa-search {
+    font-size: 0.9rem;
+    color: #212529; /* Couleur noire */
+}
+
+/* Suppression du double border entre les éléments */
+.input-group-text,
+.form-control,
+.clear-search-btn {
+    margin: -1px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('instantSearchInput');
+    let searchTimer;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchInput.form.submit();
+            }, 500); // Délai de 500ms après la fin de la saisie
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+    }
+});
+</script>
         <!-- Export Button Group -->
         <div class="btn-group mr-3" role="group" style="margin-right: 10px;">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -98,6 +197,7 @@
 
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
+
                         @foreach($users as $user)
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <!-- User ID -->

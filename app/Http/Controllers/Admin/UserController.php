@@ -13,10 +13,14 @@ class UserController extends Controller
     // Afficher tous les utilisateurs
     public function index()
     {
-        $users = User::paginate(3);  // Récupérer tous les utilisateurs
+        $users = User::when(request('search'), function($query) {
+                    $query->where('name', 'like', '%'.request('search').'%')
+                          ->orWhere('email', 'like', '%'.request('search').'%');
+                })
+                ->paginate(4);
+
         return view('admin.users.index', compact('users'));
     }
-
     // Afficher le formulaire pour créer un nouvel utilisateur
     public function create()
     {
