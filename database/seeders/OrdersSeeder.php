@@ -4,17 +4,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Order; // ✅ Importation du modèle
-use App\Models\Customer; // ✅ Importation du modèle
+use App\Models\User; // ✅ Importation du modèle
 
 class OrdersSeeder extends Seeder
 {
     public function run()
     {
-        $customers = Customer::all();
+        $users = User::all();
 
-        foreach ($customers as $customer) {
+        foreach ($users as $user) {
             Order::create([
-                'customer_id' => $customer->id,
+                'user_id' => $user->id,
                 'total' => rand(100, 2000),
             ]);
         }

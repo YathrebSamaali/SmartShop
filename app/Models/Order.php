@@ -9,13 +9,14 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'total'];
+    protected $fillable = ['user_id', 'total'];
 
     // Relation avec Customer (une commande appartient à un client)
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 
     // Relation avec OrderItem (une commande contient plusieurs articles)
     public function items()

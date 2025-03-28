@@ -12,7 +12,7 @@ return new class extends Migration
     public function up() {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->decimal('total', 10, 2);
             $table->timestamps();
         });

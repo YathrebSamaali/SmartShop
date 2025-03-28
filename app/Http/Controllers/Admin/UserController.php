@@ -2,50 +2,76 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    // Méthode pour afficher tous les utilisateurs
+    // Afficher tous les utilisateurs
     public function index()
     {
-        // Code pour récupérer et afficher les utilisateurs
+        $users = User::all();  // Récupérer tous les utilisateurs
+        return view('admin.users.index', compact('users'));
     }
 
-    // Méthode pour afficher le formulaire de création d'un utilisateur
+    // Afficher le formulaire pour créer un nouvel utilisateur
     public function create()
     {
-        // Code pour afficher le formulaire
+        return view('admin.users.create');
     }
 
-    // Méthode pour enregistrer un utilisateur
+    // Enregistrer un nouvel utilisateur
     public function store(Request $request)
     {
-        // Code pour enregistrer un nouvel utilisateur
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',  // Le champ password_confirmation est nécessaire
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);  // Hashage du mot de passe
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès');
     }
 
-    // Méthode pour afficher un utilisateur
-    public function show($id)
-    {
-        // Code pour afficher un utilisateur spécifique
-    }
-
-    // Méthode pour afficher le formulaire d'édition d'un utilisateur
+    // Afficher le formulaire pour éditer un utilisateur existant
     public function edit($id)
     {
-        // Code pour afficher le formulaire d'édition
+        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
+        return view('admin.users.edit', compact('user'));
     }
 
-    // Méthode pour mettre à jour un utilisateur
+    // Mettre à jour un utilisateur existant
     public function update(Request $request, $id)
     {
-        // Code pour mettre à jour un utilisateur spécifique
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id, // Exclure l'utilisateur actuel
+            'password' => 'nullable|min:8|confirmed',  // Le champ password_confirmation est nécessaire
+        ]);
+
+        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);  // Si un mot de passe est fourni, le mettre à jour
+        }
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'Utilisateur mis à jour avec succès');
     }
 
-    // Méthode pour supprimer un utilisateur
+    // Supprimer un utilisateur
     public function destroy($id)
     {
-        // Code pour supprimer un utilisateur
+        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé avec succès');
     }
 }

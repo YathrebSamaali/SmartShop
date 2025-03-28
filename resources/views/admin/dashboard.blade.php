@@ -9,80 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            background-color: #343a40;
-            color: #fff;
-            padding-top: 20px;
-        }
-
-        .sidebar a {
-            color: #ddd;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-header {
-            background-color: #343a40;
-            color: #fff;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .header-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+        <!-- Sidebar CSS -->
+        <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h3 class="text-center text-white">Admin Panel</h3>
-        <ul class="list-unstyled">
-            <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Users Management</a></li>
-            <li><a href="#"><i class="fas fa-box"></i> Products Management</a></li>
-            <li><a href="#"><i class="fas fa-cart-plus"></i> Orders Management</a></li>
-            <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-    </div>
+@include('admin.includes.sidebar')
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="content" style="margin-left: 260px; background-color: #f8f9fa; min-height: 100vh;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

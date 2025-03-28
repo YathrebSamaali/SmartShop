@@ -22,12 +22,9 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    // app/Http/Kernel.php
-
-protected $routeMiddleware = [
-    'auth' => \App\Http\Middleware\Authenticate::class,
-    'admin' => \App\Http\Middleware\AdminMiddleware::class,
-];
-
+    protected $routeMiddleware = [
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,        // Ajoutez cette ligne
     ];
+
 }

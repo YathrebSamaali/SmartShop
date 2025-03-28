@@ -1,0 +1,52 @@
+/* public/css/sidebar.css */
+body {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    padding-top: 20px;
+}
+.sidebar h2 {
+    font-size: 1.75rem; /* Larger text size */
+    font-weight: bold;  /* Make it bold */
+    text-align: center; /* Center-align the heading */
+    color: #fff;        /* Keep the text white */
+    padding: 10px;      /* Add some padding for better spacing */
+    margin-bottom: 30px; /* Add some space below the heading */
+    background-color: #495057; /* Add a background color */
+    border-radius: 8px;  /* Optional: Adds rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: adds a subtle shadow for depth */
+}
+.sidebar a {
+    color: #ddd;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+}
+
+.sidebar .account-info {
+    margin-top: 30px;
+    padding: 10px;
+    border-top: 1px solid #495057;
+}
+
+.sidebar .account-info img {
+    width: 50px;
+    height: 50px;
+}
+
+.sidebar .account-info p {
+    margin: 0;
+    color: #fff;
+}
