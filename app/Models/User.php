@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_login',  // Ajoutez last_login ici
     ];
 
     /**
@@ -45,9 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function orders()
-{
-    return $this->hasMany(Order::class);
-}
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

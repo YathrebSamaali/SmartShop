@@ -34,6 +34,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);  // Hashage du mot de passe
+        $user->last_login = now();  // Ajouter la valeur de last_login lors de la création de l'utilisateur
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès');
@@ -61,6 +62,8 @@ class UserController extends Controller
         if ($request->password) {
             $user->password = bcrypt($request->password);  // Si un mot de passe est fourni, le mettre à jour
         }
+        // Si vous voulez mettre à jour le champ last_login à chaque mise à jour de l'utilisateur
+        $user->last_login = now();  // Mettre à jour le champ last_login
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur mis à jour avec succès');

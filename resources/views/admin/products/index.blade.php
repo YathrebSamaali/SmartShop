@@ -94,9 +94,10 @@
                             </td>
 
                             <!-- Actions -->
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <!-- Actions -->
+                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-3">
-                                   <!-- Edit Button -->
+                                    <!-- Edit Button -->
                                     <a href="{{ route('admin.products.edit', $product->id) }}"
                                        class="text-indigo-600 hover:text-indigo-900 flex items-center p-2 rounded-full hover:bg-indigo-50 transition duration-200"
                                        title="Edit">
