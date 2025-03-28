@@ -5,40 +5,68 @@
 <div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 30px;">
     <div class="container-fluid">
         <!-- Header Section -->
-        <div class="d-flex justify-content-between align-items-start mb-5">
-            <div>
-                <h1 class="h3 mb-2 text-gray-800">User Management</h1>
-                <p class="text-gray-600 mb-0">Complete list of registered users</p>
-            </div>
-            <div class="text-right">
-                <div class="d-flex align-items-center">
-                    <!-- Export Button -->
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-file-export"></i> Exporter
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'csv') }}"><i class="fas fa-file-csv"></i> Export CSV</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'excel') }}"><i class="fas fa-file-excel"></i> Export Excel</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.users.export', 'pdf') }}"><i class="fas fa-file-pdf"></i> Export PDF</a></li>
-                            </ul>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1 text-gray-800">Gestion des Utilisateurs</h1>
+        <p class="text-gray-600 mb-0">
+            <i class="fas fa-users mr-1"></i> Liste complète des utilisateurs enregistrés
+        </p>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <!-- Export Button Group -->
+        <div class="btn-group mr-3" role="group">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-file-export mr-2"></i>Exporter
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'csv') }}">
+                        <i class="fas fa-file-csv text-primary mr-2"></i>
+                        <div>
+                            <div>CSV</div>
+                            <small class="text-muted">Format tableur</small>
                         </div>
-                    </div>
-
-
-
-                    <!-- Add User Button -->
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-inline-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" width="18">
-                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                        </svg>
-                        Add User
                     </a>
-                </div>
-                <p class="text-muted small mt-2">Click to create a new user</p>
-            </div>
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'excel') }}">
+                        <i class="fas fa-file-excel text-success mr-2"></i>
+                        <div>
+                            <div>Excel</div>
+                            <small class="text-muted">Fichier XLSX</small>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'pdf') }}">
+                        <i class="fas fa-file-pdf text-danger mr-2"></i>
+                        <div>
+                            <div>PDF</div>
+                            <small class="text-muted">Document imprimable</small>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
+
+        <!-- Add User Button -->
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center">
+            <i class="fas fa-user-plus mr-2"></i>
+            <span>Ajouter un utilisateur</span>
+        </a>
+    </div>
+</div>
+
+<div class="alert alert-info border-left-primary shadow-sm">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-info-circle mr-2"></i>
+        <div>
+            <strong>Astuce :</strong> Utilisez les options d'exportation pour sauvegarder la liste des utilisateurs.
+            <div class="small">Cliquez sur "Ajouter un utilisateur" pour créer un nouveau compte.</div>
+        </div>
+    </div>
+</div>
 
         <!-- Success Message -->
         @if(session('success'))
