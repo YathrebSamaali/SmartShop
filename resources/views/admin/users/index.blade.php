@@ -6,167 +6,91 @@
     <div class="container-fluid">
         <!-- Header Section -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h1 class="h3 mb-1 text-gray-800">Gestion des Utilisateurs</h1>
-        <p class="text-gray-600 mb-0">
-            Liste complète des utilisateurs enregistrés
-        </p>
-    </div>
+            <div>
+                <h1 class="h3 mb-1 text-gray-800">Gestion des Utilisateurs</h1>
+                <p class="text-gray-600 mb-0">
+                    Liste complète des utilisateurs enregistrés
+                </p>
+            </div>
 
-    <div class="d-flex align-items-center">
-<!-- Search Form with Icons -->
-<!-- Search Form Professionnelle avec Recherche Instantanée -->
-<form method="GET" action="{{ route('admin.users.index') }}" class="d-flex align-items-center mt-3">
-    <div class="input-group search-container" style="width: 300px;">
-        <span class="input-group-text ">
-            <i class="fas fa-search text-secondary"></i>
-        </span>
-        <input type="text"
-               name="search"
-               class="form-control border-start-0 ps-2 py-2"
-               placeholder="Rechercher utilisateur..."
-               value="{{ request('search') }}"
-               aria-label="Search"
-               id="instantSearchInput"
-               style="border-radius: 0 4px 4px 0;">
-        @if(request('search'))
-        <a href="{{ route('admin.users.index') }}"
-   class="input-group-text bg-transparent clear-search-btn"
-   title="Effacer la recherche">
+            <div class="d-flex align-items-center">
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('admin.users.index') }}" class="d-flex align-items-center mt-3">
+                    <div class="input-group search-container" style="width: 300px;">
+                        <span class="input-group-text">
+                            <i class="fas fa-search text-secondary"></i>
+                        </span>
+                        <input type="text"
+                               name="search"
+                               class="form-control border-start-0 ps-2 py-2"
+                               placeholder="Rechercher utilisateur..."
+                               value="{{ request('search') }}"
+                               aria-label="Search"
+                               id="instantSearchInput"
+                               style="border-radius: 0 4px 4px 0;">
+                        @if(request('search'))
+                        <a href="{{ route('admin.users.index') }}"
+                           class="input-group-text bg-transparent clear-search-btn"
+                           title="Effacer la recherche">
+                            <i class="fas fa-times text-danger"></i>
+                        </a>
+                        @endif
+                    </div>
+                </form>
 
+                <!-- Export Button Group -->
+                <div class="btn-group mr-3" role="group" style="margin-right: 10px;">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-file-export mr-2"></i>Exporter
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'csv') }}">
+                                <i class="fas fa-file-csv text-primary mr-2"></i>
+                                <div>
+                                    <div>CSV</div>
+                                    <small class="text-muted">Format tableur</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'excel') }}">
+                                <i class="fas fa-file-excel text-success mr-2"></i>
+                                <div>
+                                    <div>Excel</div>
+                                    <small class="text-muted">Fichier XLSX</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'pdf') }}">
+                                <i class="fas fa-file-pdf text-danger mr-2"></i>
+                                <div>
+                                    <div>PDF</div>
+                                    <small class="text-muted">Document imprimable</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-</a>
-        @endif
-    </div>
-</form>
-
-<style>
-.search-container {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid #212529; /* Bordure noire */
-    overflow: hidden; /* Pour contenir les bordures internes */
-    margin-right: 12px;
-}
-
-.search-container:focus-within {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: #212529; /* Maintien de la bordure noire au focus */
-    outline: 2px solid #a0c4ff; /* Ajout d'un contour bleu pour le focus */
-}
-
-.form-control {
-    font-size: 0.95rem;
-    height: 40px;
-    border: 1px solid #212529 !important; /* Bordure noire */
-    border-left: none !important;
-    border-right: none !important;
-}
-
-.form-control:focus {
-    box-shadow: none;
-    border-color: #212529 !important; /* Maintien au focus */
-}
-
-
-
-.input-group-text {
-    background-color: #fff !important;
-    border: 1px solid #212529 !important; /* Bordure noire */
-    border-right: none !important;
-    padding: 0 12px;
-    transition: all 0.25s ease;
-}
-
-.fa-search {
-    font-size: 0.9rem;
-    color: #212529; /* Couleur noire */
-}
-
-/* Suppression du double border entre les éléments */
-.input-group-text,
-.form-control,
-.clear-search-btn {
-    margin: -1px;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('instantSearchInput');
-    let searchTimer;
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(function() {
-                searchInput.form.submit();
-            }, 500); // Délai de 500ms après la fin de la saisie
-        });
-
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                this.form.submit();
-            }
-        });
-    }
-});
-</script>
-        <!-- Export Button Group -->
-        <div class="btn-group mr-3" role="group" style="margin-right: 10px;">
-            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-file-export mr-2"></i>Exporter
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'csv') }}">
-                        <i class="fas fa-file-csv text-primary mr-2"></i>
-                        <div>
-                            <div>CSV</div>
-                            <small class="text-muted">Format tableur</small>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'excel') }}">
-                        <i class="fas fa-file-excel text-success mr-2"></i>
-                        <div>
-                            <div>Excel</div>
-                            <small class="text-muted">Fichier XLSX</small>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.users.export', 'pdf') }}">
-                        <i class="fas fa-file-pdf text-danger mr-2"></i>
-                        <div>
-                            <div>PDF</div>
-                            <small class="text-muted">Document imprimable</small>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+                <!-- Add User Button -->
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    <span>Ajouter un utilisateur</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Add User Button -->
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-flex align-items-center">
-            <i class="fas fa-user-plus mr-2"></i>
-            <span>Ajouter un utilisateur</span>
-        </a>
-    </div>
-</div>
-
-<div class="alert alert-info border-left-primary shadow-sm">
-    <div class="d-flex align-items-center">
-        <i class="fas fa-info-circle mr-2"></i>
-        <div>
-            <strong>Astuce :</strong> Utilisez les options d'exportation pour sauvegarder la liste des utilisateurs.
-            <div class="small">Cliquez sur "Ajouter un utilisateur" pour créer un nouveau compte.</div>
+        <div class="alert alert-info border-left-primary shadow-sm">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-info-circle mr-2"></i>
+                <div>
+                    <strong>Astuce :</strong> Utilisez les options d'exportation pour sauvegarder la liste des utilisateurs.
+                    <div class="small">Cliquez sur "Ajouter un utilisateur" pour créer un nouveau compte.</div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
         <!-- Success Message -->
         @if(session('success'))
@@ -180,115 +104,216 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         @endif
 
-        <!-- Users Table -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
+        <!-- Users Table Container -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden position-relative" style="min-height: 400px;">
+            @if($users->count() > 0)
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($users as $user)
+                            <tr class="hover:bg-gray-50 transition duration-150">
+                                <!-- User ID -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $user->id }}</div>
+                                </td>
 
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-
-                        @foreach($users as $user)
-                        <tr class="hover:bg-gray-50 transition duration-150">
-                            <!-- User ID -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $user->id }}</div>
-                            </td>
-
-                            <!-- User Name -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-12 w-12">
-                                        <img class="h-12 w-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=random&size=128" alt="Avatar of {{ $user->name }}">
+                                <!-- User Name -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-12 w-12">
+                                            <img class="h-12 w-12 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=random&size=128" alt="Avatar of {{ $user->name }}">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+                                            <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                                        </div>
                                     </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-                                        <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                                </td>
+
+                                <!-- Email -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ $user->email }}</div>
+                                </td>
+
+                                <!-- Role -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        {{ $user->is_admin ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }}">
+                                        {{ $user->is_admin ? 'Administrator' : 'User' }}
+                                    </span>
+                                </td>
+
+                                <!-- Details -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ route('admin.users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900">Registered on {{ $user->created_at->format('d/m/Y') }}</a>
+                                </td>
+
+                                <!-- Last visit (last login) -->
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                        {{ $user->last_login ? \Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i') : 'Never' }}
                                     </div>
-                                </div>
-                            </td>
+                                </td>
 
-                            <!-- Email -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $user->email }}</div>
-                            </td>
-
-                            <!-- Role -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                    {{ $user->is_admin ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }}">
-                                    {{ $user->is_admin ? 'Administrator' : 'User' }}
-                                </span>
-                            </td>
-
-                            <!-- Details -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="{{ route('admin.users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900">Registered on {{ $user->created_at->format('d/m/Y') }}</a>
-                            </td>
-
-                            <!-- Last visit (last login) -->
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">
-                                    {{ $user->last_login ? \Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i') : 'Never' }}
-                                </div>
-                            </td>
-
-                            <!-- Actions -->
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-3">
-                                    <!-- Edit Button -->
-                                    <a href="{{ route('admin.users.edit', $user->id) }}"
-                                       class="text-indigo-600 hover:text-indigo-900 flex items-center p-2 rounded-full hover:bg-indigo-50 transition duration-200"
-                                       title="Edit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                        </svg>
-                                    </a>
-
-                                    <!-- Delete Button -->
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="text-red-600 hover:text-red-900 flex items-center p-2 rounded-full hover:bg-red-100 transition duration-200"
-                                                title="Delete">
+                                <!-- Actions -->
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex justify-end space-x-3">
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('admin.users.edit', $user->id) }}"
+                                           class="text-indigo-600 hover:text-indigo-900 flex items-center p-2 rounded-full hover:bg-indigo-50 transition duration-200"
+                                           title="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                             </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                                        </a>
 
-            <!-- Pagination -->
-            @if(method_exists($users, 'links'))
-            <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                {{ $users->links() }}
-            </div>
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="text-red-600 hover:text-red-900 flex items-center p-2 rounded-full hover:bg-red-100 transition duration-200"
+                                                    title="Delete">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                @if(method_exists($users, 'links'))
+                <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                    {{ $users->links() }}
+                </div>
+                @endif
+            @else
+                <!-- No Results Overlay -->
+                <div class="no-results-overlay d-flex align-items-center justify-content-center">
+                    <div class="text-center p-5">
+                        <i class="fas fa-search fa-4x text-muted mb-4"></i>
+                        <h3 class="text-gray-700 mb-2">Aucun résultat trouvé</h3>
+                        <p class="text-gray-500 mb-4">Votre recherche "{{ request('search') }}" n'a retourné aucun utilisateur correspondant.</p>
+                        @if(request('search'))
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-primary">
+                            <i class="fas fa-undo mr-2"></i> Réinitialiser la recherche
+                        </a>
+                        @endif
+                    </div>
+                </div>
             @endif
         </div>
     </div>
 </div>
 @endsection
-<!-- Bootstrap JS (assurez-vous qu'il est bien chargé) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+.search-container {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #212529;
+    overflow: hidden;
+    margin-right: 12px;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    outline: 2px solid #a0c4ff;
+}
+
+.form-control {
+    font-size: 0.95rem;
+    height: 40px;
+    border: 1px solid #212529 !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    color: #dc3545 !important;
+}
+
+.no-results-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.input-group-text {
+    background-color: #fff !important;
+    border-right: none !important;
+    padding: 0 12px;
+}
+
+.fa-search {
+    font-size: 0.9rem;
+    color: #212529;
+}
+
+/* Suppression du double border entre les éléments */
+.input-group-text,
+.form-control,
+.clear-search-btn {
+    margin: -1px;
+}
+</style>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-submit search
+    const searchInput = document.getElementById('instantSearchInput');
+    let searchTimer;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchInput.form.submit();
+            }, 500);
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+    }
+
+    // Auto-hide success message
     setTimeout(function() {
         let alertMessage = document.getElementById('alert-message');
         if (alertMessage) {
@@ -296,5 +321,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alertMessage.style.opacity = "0";
             setTimeout(() => alertMessage.style.display = "none", 500);
         }
-    }, 5000); // Disappears after 5 seconds
+    }, 5000);
+});
 </script>
