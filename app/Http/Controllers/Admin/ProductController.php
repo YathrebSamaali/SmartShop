@@ -46,7 +46,7 @@ public function index()
         ]);
 
         return redirect()->route('admin.products.index')
-            ->with('success', 'Produit créé avec succès');
+            ->with('success', 'Product created successfully.');
     }
 
     private function handleImageUpload(Request $request)
@@ -121,7 +121,7 @@ public function index()
         ]);
 
         // Retourner vers la liste des produits avec un message de succès
-        return redirect()->route('admin.products.index')->with('success', 'Produit mis à jour avec succès');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
 
@@ -142,7 +142,7 @@ public function index()
     $product->delete();
 
     // Rediriger vers la liste des produits avec un message de succès
-    return redirect()->route('admin.products.index')->with('success', 'Produit supprimé avec succès');
+    return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
 }
 
 }

@@ -7,17 +7,17 @@
         <!-- Header Section -->
         <div class="d-flex justify-content-between align-items-start mb-5">
             <div>
-                <h1 class="h3 mb-2 text-gray-800">Gestion des Produits</h1>
-                <p class="text-gray-600 mb-0">Liste complète des produits disponibles</p>
+                <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
+                <p class="text-gray-600 mb-0">Complete list of available products</p>
             </div>
             <div class="text-right">
                 <a href="{{ route('admin.products.create') }}" class="btn btn-primary d-inline-flex align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" width="18">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
-                    Ajouter un produit
+                    Add Product
                 </a>
-                <p class="text-muted small mt-2">Cliquez pour ajouter un nouveau produit</p>
+                <p class="text-muted small mt-2">Click to add a new product</p>
             </div>
         </div>
 
@@ -40,10 +40,10 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -54,7 +54,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex-shrink-0 h-12 w-12">
                                     @if($product->image)
-                                    <img class="h-12 w-12 rounded-md object-cover" src="{{ Storage::url($product->image) }}" alt="Image produit">
+                                    <img class="h-12 w-12 rounded-md object-cover" src="{{ Storage::url($product->image) }}" alt="Product Image">
                                     @else
                                     <div class="h-12 w-12 rounded-md bg-gray-200 flex items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,7 +82,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     {{ $product->stock > 10 ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $product->stock }} en stock
+                                    {{ $product->stock }} in stock
                                 </span>
                             </td>
 
@@ -97,21 +97,21 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-3">
                                    <!-- Edit Button -->
-                                                                        <a href="{{ route('admin.products.edit', $product->id) }}"
-                                        class="text-indigo-600 hover:text-indigo-900 flex items-center p-2 rounded-full hover:bg-indigo-50 transition duration-200"
-                                        title="Modifier">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                            </svg>
-                                        </a>
+                                    <a href="{{ route('admin.products.edit', $product->id) }}"
+                                       class="text-indigo-600 hover:text-indigo-900 flex items-center p-2 rounded-full hover:bg-indigo-50 transition duration-200"
+                                       title="Edit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                        </svg>
+                                    </a>
 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
+                                    <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                                 class="text-red-600 hover:text-red-900 flex items-center p-2 rounded-full hover:bg-red-100 transition duration-200"
-                                                title="Supprimer">
+                                                title="Delete">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                             </svg>
@@ -135,6 +135,7 @@
     </div>
 </div>
 @endsection
+
 <script>
     setTimeout(function() {
         let alertMessage = document.getElementById('alert-message');
@@ -143,5 +144,5 @@
             alertMessage.style.opacity = "0";
             setTimeout(() => alertMessage.style.display = "none", 500);
         }
-    }, 5000); // Disparaît après 5 secondes
+    }, 5000); // Disappears after 5 seconds
 </script>
