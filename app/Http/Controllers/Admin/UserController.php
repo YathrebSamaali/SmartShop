@@ -8,73 +8,101 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class UserController extends Controller
 {
-    // Afficher tous les utilisateurs
+    /**
+     * Display paginated list of users
+     */
     public function index()
     {
         $users = User::when(request('search'), function($query) {
                     $query->where('name', 'like', '%'.request('search').'%')
                           ->orWhere('email', 'like', '%'.request('search').'%');
                 })
-                ->paginate(4);
+                ->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }
-    // Afficher le formulaire pour créer un nouvel utilisateur
+
+    /**
+     * Show user creation form
+     */
     public function create()
     {
         return view('admin.users.create');
     }
 
-    // Enregistrer un nouvel utilisateur
+    /**
+     * Store new user
+     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',  // Le champ password_confirmation est nécessaire
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);  // Hashage du mot de passe
-        $user->last_login = now();  // Ajouter la valeur de last_login lors de la création de l'utilisateur
-        $user->save();
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'last_login' => now()
+        ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès');
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 
-    // Afficher le formulaire pour éditer un utilisateur existant
-    public function edit($id)
+    /**
+     * Display user details
+     */
+    public function show(User $user)
     {
-        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
+        return view('admin.users.show', compact('user'));
+    }
+
+    /**
+     * Show user edit form
+     */
+    public function edit(User $user)
+    {
         return view('admin.users.edit', compact('user'));
     }
 
-    // Mettre à jour un utilisateur existant
-    public function update(Request $request, $id)
+    /**
+     * Update user data
+     */
+    public function update(Request $request, User $user)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id, // Exclure l'utilisateur actuel
-            'password' => 'nullable|min:8|confirmed',  // Le champ password_confirmation est nécessaire
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => 'nullable|min:8|confirmed',
         ]);
 
-        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password) {
-            $user->password = bcrypt($request->password);  // Si un mot de passe est fourni, le mettre à jour
-        }
-        // Si vous voulez mettre à jour le champ last_login à chaque mise à jour de l'utilisateur
-        $user->last_login = now();  // Mettre à jour le champ last_login
-        $user->save();
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+            'last_login' => now()
+        ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur mis à jour avec succès');
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 
+    /**
+     * Delete user
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
+    }
+
+    /**
+     * Export users in specified format
+     */
     public function export($format)
     {
         switch ($format) {
@@ -87,15 +115,7 @@ class UserController extends Controller
                 $pdf = PDF::loadView('admin.users.export_pdf', compact('users'));
                 return $pdf->download('users.pdf');
             default:
-                abort(404, 'Format non supporté');
+                abort(404, 'Unsupported format');
         }
-    }
-    // Supprimer un utilisateur
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);  // Récupérer l'utilisateur par son ID
-        $user->delete();
-
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé avec succès');
     }
 }
