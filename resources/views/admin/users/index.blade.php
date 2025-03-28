@@ -9,13 +9,14 @@
     <div>
         <h1 class="h3 mb-1 text-gray-800">Gestion des Utilisateurs</h1>
         <p class="text-gray-600 mb-0">
-            <i class="fas fa-users mr-1"></i> Liste complète des utilisateurs enregistrés
+            Liste complète des utilisateurs enregistrés
         </p>
     </div>
 
     <div class="d-flex align-items-center">
+
         <!-- Export Button Group -->
-        <div class="btn-group mr-3" role="group">
+        <div class="btn-group mr-3" role="group" style="margin-right: 10px;">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-file-export mr-2"></i>Exporter
             </button>
@@ -94,6 +95,7 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
+
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($users as $user)

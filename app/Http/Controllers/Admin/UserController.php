@@ -13,7 +13,7 @@ class UserController extends Controller
     // Afficher tous les utilisateurs
     public function index()
     {
-        $users = User::paginate(4);  // Récupérer tous les utilisateurs
+        $users = User::paginate(3);  // Récupérer tous les utilisateurs
         return view('admin.users.index', compact('users'));
     }
 

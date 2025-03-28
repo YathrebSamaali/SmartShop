@@ -52,6 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-
+// In your User model
+protected $casts = [
+    'created_at' => 'datetime',
+    'last_login' => 'datetime',
+];
 
 }
