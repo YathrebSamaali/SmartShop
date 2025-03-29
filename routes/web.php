@@ -9,8 +9,12 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 use App\Models\Product;
 use App\Models\Contact;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,9 +80,16 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
         Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('products.store');
         Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
-        Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update'); // Assurez-vous que {id} est bien là
+        Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+        // ✅ Ajout de la route pour afficher un produit (SHOW)
+        Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+        // ✅ Ajout de la route pour exporter les produits (EXPORT)
+        Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
     });
+
 
 
 
@@ -96,9 +107,27 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
 // ----------------------------------------------------------------------
 // 2. Routes pour la Connexion et la Déconnexion de l'Administrateur
 // ----------------------------------------------------------------------
-Route::get('/admin', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
-Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+// Routes Admin
+// ----------------------------------------------------------------------
+
+
+// Route de redirection vers la page de connexion /admin
+Route::redirect('/admin', '/admin/login')->name('admin.redirect');
+
+// Groupement des routes admin avec un préfixe 'admin'
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Page de connexion (GET)
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+
+    // Traitement du formulaire de connexion (POST)
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
+
+    // Déconnexion de l'admin (POST)
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+    // D'autres routes pour l'admin peuvent être ajoutées ici
+});
 
 // ----------------------------------------------------------------------
 // 3. Route protégée par le Middleware 'auth' pour afficher le Tableau de Bord
@@ -110,7 +139,6 @@ Route::middleware(['auth'])->group(function () {
         })->name('admin.dashboard');
     });
 });
-
 
 
 require __DIR__.'/auth.php';

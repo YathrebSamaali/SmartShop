@@ -1,30 +1,36 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller; // Assurez-vous d'étendre Controller
+
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductsExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
 {
-    // Afficher tous les produits
-    // Dans votre contrôleur
-public function index()
-{
-    $products = Product::paginate(4); // Au lieu de Product::all()
-    return view('admin.products.index', compact('products'));
-}
+    public function index()
+    {
+        $products = Product::when(request('search'), function($query) {
+                    $query->where('name', 'like', '%'.request('search').'%')
+                          ->orWhere('description', 'like', '%'.request('search').'%');
+                })
+                ->paginate(5);
 
-    // Afficher le formulaire de création de produit
+        return view('admin.products.index', compact('products'));
+    }
+
     public function create()
     {
         return view('admin.products.create');
     }
 
-    // Enregistrer un nouveau produit
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
@@ -33,20 +39,18 @@ public function index()
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        // Gestion de l'image
         $imagePath = $this->handleImageUpload($request);
 
-        $product = Product::create([
-            'name' => $validatedData['name'],
-            'description' => $validatedData['description'],
-            'price' => $validatedData['price'],
-            'stock' => $validatedData['stock'],
-            'category' => $validatedData['category'],
+        Product::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'category' => $validated['category'],
             'image' => $imagePath
         ]);
 
-        return redirect()->route('admin.products.index')
-            ->with('success', 'Product created successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
     }
 
     private function handleImageUpload(Request $request)
@@ -55,10 +59,8 @@ public function index()
             return null;
         }
 
-        // Générer un nom unique pour l'image
         $fileName = time().'_'.$request->file('image')->getClientOriginalName();
 
-        // Stocker l'image dans le dossier public/storage/products
         return $request->file('image')->storeAs(
             'products',
             $fileName,
@@ -66,83 +68,72 @@ public function index()
         );
     }
 
-    // Afficher les détails d'un produit
     public function show(Product $product)
     {
         return view('admin.products.show', compact('product'));
     }
 
-    // Afficher le formulaire de modification d'un produit
-    public function edit($id)
-{
-    $product = Product::findOrFail($id);
-    return view('admin.products.edit', compact('product'));
-}
-
-
-    // Mettre à jour un produit
-    public function update(Request $request, $id) // Le paramètre $id est passé ici
+    public function edit(Product $product)
     {
-        // Récupérer le produit par ID
-        $product = Product::findOrFail($id); // Utilisation de findOrFail pour récupérer le produit, ou erreur 404 si non trouvé
+        return view('admin.products.edit', compact('product'));
+    }
 
-        // Validation des champs
-        $validatedData = $request->validate([
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'category' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation pour l'image
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        // Gestion de l'image
         if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image, si elle existe
             if ($product->image && Storage::exists($product->image)) {
                 Storage::delete($product->image);
             }
-
-            // Enregistrer la nouvelle image
-            $imagePath = $request->file('image')->store('products', 'public'); // Stockage dans le dossier 'products'
+            $imagePath = $this->handleImageUpload($request);
         } else {
-            // Si aucune image n'est envoyée, conserver l'ancienne image
             $imagePath = $product->image;
         }
 
-        // Mise à jour du produit
         $product->update([
-            'name' => $validatedData['name'],
-            'description' => $validatedData['description'],
-            'price' => $validatedData['price'],
-            'stock' => $validatedData['stock'],
-            'category' => $validatedData['category'],
-            'image' => $imagePath, // Mise à jour de l'image
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'category' => $validated['category'],
+            'image' => $imagePath
         ]);
 
-        // Retourner vers la liste des produits avec un message de succès
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
+    public function destroy(Product $product)
+    {
+        if ($product->image && Storage::exists($product->image)) {
+            Storage::delete($product->image);
+        }
 
+        $product->delete();
 
-
-    // Supprimer un produit
-    public function destroy($id)
-{
-    // Récupérer le produit par son ID
-    $product = Product::findOrFail($id);
-
-    // Supprimer l'image associée si elle existe
-    if ($product->image && Storage::exists($product->image)) {
-        Storage::delete($product->image);
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
     }
 
-    // Supprimer le produit de la base de données
-    $product->delete();
-
-    // Rediriger vers la liste des produits avec un message de succès
-    return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
-}
-
+    public function export($format)
+    {
+        switch ($format) {
+            case 'csv':
+                return Excel::download(new ProductsExport, 'products.csv');
+            case 'excel':
+                return Excel::download(new ProductsExport, 'products.xlsx');
+            case 'pdf':
+                $products = Product::all();
+                $pdf = PDF::loadView('admin.products.export_pdf', compact('products'));
+                return $pdf->download('products.pdf');
+            default:
+                abort(404, 'Unsupported format');
+        }
+    }
 }

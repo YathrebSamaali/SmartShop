@@ -16,7 +16,6 @@ class AdminUserSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@smartshop.com',
             'password' => Hash::make('adminpassword'), // Le mot de passe hashé
-            'role' => 'admin', // Si tu utilises le champ 'role'
             // 'is_admin' => true, // Si tu utilises 'is_admin'
         ]);
     }

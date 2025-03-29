@@ -12,6 +12,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/admin')->with('error', 'Accès refusé.');
+        return redirect('/home')->with('error', 'Accès refusé.');
     }
 }

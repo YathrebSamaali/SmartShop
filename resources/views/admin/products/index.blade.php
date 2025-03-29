@@ -1,87 +1,99 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Main Content -->
 <div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 20px;">
     <div class="container-fluid">
-        <!-- Header Section -->
-        <div class="d-flex justify-content-between align-items-start mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
-                <p class="text-gray-600 mb-0">Complete list of available products</p>
+                <h1 class="h3 mb-1 text-gray-800">User Management</h1>
+                <p class="text-gray-600 mb-0">Complete list of registered users</p>
             </div>
-            <div class="text-right">
-                <a href="{{ route('admin.products.create') }}" class="btn btn-primary d-inline-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" width="18">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    Add Product
-                </a>
-                <p class="text-muted small mt-2">Click to add a new product</p>
-            </div>
-        </div>
 
-        <!-- Search and Export Section -->
-        <div class="row mb-4">
-            <div class="col-md-8">
-                <form method="GET" action="{{ route('admin.products.index') }}" class="mb-3">
-                    <div class="input-group" style="width: 350px;">
-                        <input type="text"
-                               name="search"
-                               class="form-control border-end-0"
-                               placeholder="Search products..."
-                               value="{{ request('search') }}"
-                               aria-label="Search">
-                        <button class="btn btn-outline-secondary border-start-0" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                        @if(request('search'))
-                        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary" title="Clear search">
-                            <i class="fas fa-times"></i>
-                        </a>
-                        @endif
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-4 text-right">
-                <div class="dropdown d-inline-block">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-file-export mr-2"></i> Export
+            <div class="d-flex align-items-center">
+            <form method="GET" action="{{ route('admin.products.index') }}" class="d-flex align-items-center mt-3">
+    <div class="input-group search-container" style="width: 250px;">
+        <span class="input-group-text">
+            <i class="fas fa-search text-secondary"></i>
+        </span>
+        <input type="text"
+               name="search"
+               class="form-control border-start-0 ps-2 py-2"
+               placeholder="Search users..."
+               value="{{ request('search') }}"
+               aria-label="Search"
+               id="instantSearchInput"
+               style="border-radius: 0 4px 4px 0;">
+
+        @if(request('search'))
+        <button type="button"
+                class="input-group-text bg-transparent border-0 clear-search-btn"
+                onclick="clearSearch()"
+                title="Clear search">
+            <i class="fas fa-times text-muted"></i>
+        </button>
+        @endif
+    </div>
+</form>
+
+
+
+
+                <div class="btn-group mr-3" role="group" style="margin-right: 10px;">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-file-export mr-2"></i>Export
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="exportDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'csv']) }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', 'csv') }}">
                                 <i class="fas fa-file-csv text-primary mr-2"></i>
                                 <div>
                                     <div>CSV</div>
-                                    <small class="text-muted">Comma separated values</small>
+                                    <small class="text-muted">Spreadsheet format</small>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'excel']) }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', 'excel') }}">
                                 <i class="fas fa-file-excel text-success mr-2"></i>
                                 <div>
                                     <div>Excel</div>
-                                    <small class="text-muted">XLSX format</small>
+                                    <small class="text-muted">XLSX file</small>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', ['format' => 'pdf']) }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.products.export', 'pdf') }}">
                                 <i class="fas fa-file-pdf text-danger mr-2"></i>
                                 <div>
                                     <div>PDF</div>
-                                    <small class="text-muted">Portable document</small>
+                                    <small class="text-muted">Printable document</small>
                                 </div>
                             </a>
                         </li>
                     </ul>
                 </div>
+
+                <a href="{{ route('admin.products.create') }}" class="btn btn-primary d-flex align-items-center">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    <span>Add User</span>
+                </a>
             </div>
         </div>
 
-        <!-- Success Message -->
+        <div class="alert alert-info border-left-primary shadow-sm">
+    <div class="d-flex align-items-center">
+        <div>
+            <strong>          <i class="fas fa-lightbulb mr-2"></i> Quick Tips:</strong>
+            <ul class="mb-1 ps-3" style="list-style-type: circle;">
+            <li><strong>Export:</strong> Download user reports in three formats: PDF, Excel, or CSV</li>
+<li><strong>Search:</strong> Find users by name or email using the search bar</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
         @if(session('success'))
         <div id="alert-message" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
             <div class="d-flex align-items-center">
@@ -108,7 +120,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($products as $product)
+                        @foreach($products as $product)
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <!-- Product Image -->
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -154,7 +166,8 @@
                             </td>
 
                             <!-- Actions -->
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <!-- Actions -->
+                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-3">
                                     <!-- Edit Button -->
                                     <a href="{{ route('admin.products.edit', $product->id) }}"
@@ -180,13 +193,7 @@
                                 </div>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">
-                                No products found
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -203,6 +210,26 @@
 @endsection
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('instantSearchInput');
+    let searchTimer;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchInput.form.submit();
+            }, 500);
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+    }
+
     setTimeout(function() {
         let alertMessage = document.getElementById('alert-message');
         if (alertMessage) {
@@ -210,5 +237,15 @@
             alertMessage.style.opacity = "0";
             setTimeout(() => alertMessage.style.display = "none", 500);
         }
-    }, 2000); // Disappears after 5 seconds
+    }, 2000);
+});
 </script>
+<script>
+function clearSearch() {
+    // Remove search parameter from URL
+    const url = new URL(window.location.href);
+    url.searchParams.delete('search');
+    window.location.href = url.toString();
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
