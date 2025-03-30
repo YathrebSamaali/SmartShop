@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{ config('app.name', 'Laravel') }} - Admin Dashboard</title>
 
+
+        <link rel="stylesheet" href="{{ asset('vendor/admin-lte/css/adminlte.min.css') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -38,12 +41,12 @@
     <!-- Bootstrap and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script src="{{ asset('vendor/admin-lte/js/adminlte.min.js') }}"></script>
+
     </body>
 </html>
 
-<!--<head>
-    <link rel="stylesheet" href="{{ asset('vendor/admin-lte/css/adminlte.min.css') }}">
-</head>
-<body>
-    <script src="{{ asset('vendor/admin-lte/js/adminlte.min.js') }}"></script>
-</body>-->
+
+
+

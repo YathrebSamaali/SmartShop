@@ -22,7 +22,7 @@
 @include('admin.includes.sidebar')
 
     <!-- Main Content -->
-    <div class="content" style="margin-left: 260px; background-color: #f8f9fa; min-height: 100vh;">
+    <div class="content" style=" background-color: #f8f9fa; min-height: 100vh;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

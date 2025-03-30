@@ -16,7 +16,7 @@
     <!-- Navigation Menu -->
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item mb-2">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link text-white d-flex align-items-center hover-effect">
+            <a href="{{ route('admin.admindashboard') }}" class="nav-link text-white d-flex align-items-center hover-effect">
                 <i class="fas fa-tachometer-alt me-3 fs-5"></i>
                 <span class="fs-6">Dashboard</span>
                 <i class="fas fa-chevron-right ms-auto fs-6"></i>

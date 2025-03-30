@@ -8,7 +8,7 @@ use App\Models\Order;    // Table orders
 use App\Models\Product;  // Table products
 use Illuminate\Support\Facades\DB;
 
-class AdminController extends Controller
+class AdminDashboardController extends Controller
 {
     public function dashboard()
     {
