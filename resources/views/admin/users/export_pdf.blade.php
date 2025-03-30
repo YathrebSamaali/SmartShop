@@ -11,7 +11,10 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
+            font-size: 12px;
+
         }
+
         .header {
             text-align: center;
             margin-bottom: 25px;
@@ -38,31 +41,28 @@
             border-radius: 5px;
         }
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        th {
-            background-color: #3498db;
-            color: white;
-            text-align: left;
-            padding: 12px 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 13px;
-        }
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: top;
-        }
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10px; /* Réduire la taille du texte */
+    }
+    th, td {
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+        word-break: break-word;
+    }
+    th {
+        background-color: #3498db;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
         .footer {
             margin-top: 30px;
             text-align: right;
@@ -71,34 +71,9 @@
             padding-top: 15px;
             border-top: 1px solid #eee;
         }
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-admin {
-            background-color: #9b59b6;
-            color: white;
-        }
-        .badge-user {
-            background-color: #3498db;
-            color: white;
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-height: 60px;
-        }
     </style>
 </head>
 <body>
-
 
     <div class="header">
         <h1>User Management Report</h1>
@@ -123,6 +98,9 @@
                 <th>ID</th>
                 <th>Full Name</th>
                 <th>Email Address</th>
+                <th>Address</th>
+                <th>Postal Code</th>
+                <th>Phone Number</th>
                 <th>Registration Date</th>
             </tr>
         </thead>
@@ -132,7 +110,9 @@
                 <td>#{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-
+                <td>{{ $user->address ?? 'N/A' }}</td>
+                <td>{{ $user->postal_code ?? 'N/A' }}</td>
+                <td>{{ $user->phone_number ?? 'N/A' }}</td>
                 <td>
                     @if($user->created_at)
                         {{ \Carbon\Carbon::parse($user->created_at)->format('M j, Y') }}
@@ -159,5 +139,6 @@
             });
         });
     </script>
+
 </body>
 </html>

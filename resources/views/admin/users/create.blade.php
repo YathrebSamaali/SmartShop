@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 20px;">
-    <div class="container-fluid">
-        <div class="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto">
+<div class="content" style="background-color: #f8f9fa; padding: 20px;">
+    <div class="container-fluid px-0"> <!-- Modification ici : px-0 pour supprimer le padding horizontal -->
+        <div class="bg-white rounded-lg shadow-md p-6 mx-auto w-full"> <!-- Modification ici : w-full pour pleine largeur -->
             <!-- Header with Title and Close Button -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="h3 mb-1 text-gray-800">Add a New User</h1>
@@ -14,18 +14,18 @@
                 </a>
             </div>
             <div class="alert alert-info border-left-primary shadow-sm mb-4">
-    <div class="d-flex align-items-center">
-        <div>
-            <strong><i class="fas fa-lightbulb mr-2"></i> Quick Tips:</strong>
-            <ul class="mb-1 ps-3" style="list-style-type: circle;">
-            <li><strong>Password Requirements:</strong> Passwords must be at least 8 characters long</li>
+                <div class="d-flex align-items-center">
+                    <div>
+                        <strong><i class="fas fa-lightbulb mr-2"></i> Quick Tips:</strong>
+                        <ul class="mb-1 ps-3" style="list-style-type: circle;">
+                            <li><strong>Password Requirements:</strong> Passwords must be at least 8 characters long</li>
                             <li><strong>Administrators: </strong>Administrators have full system access</li>
                             <li><strong>Email Validation: </strong> User emails must be unique and valid</li>
                             <li><strong>Editing:</strong> You can edit user details later</li>
-            </ul>
-        </div>
-    </div>
-</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
 

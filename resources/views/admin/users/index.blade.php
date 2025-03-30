@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content" style="margin-left: 250px; background-color: #f8f9fa; padding: 20px;">
+<div class="content" style=" background-color: #f8f9fa; padding: 20px;">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
@@ -110,60 +110,62 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-solid from-blue-50 to-indigo-50">
-                            <tr>
-                                <th scope="col" style="width: 7%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">ID</th>
-                                <th scope="col" style="width: 25%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Name</th>
-                                <th scope="col" style="width: 28%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Email</th>
-                                <th scope="col" style="width:12%" class="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
-                                <th scope="col" style="width: 18%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Registration</th>
-                                <th scope="col" style="width: 10%" class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">Actions</th>
-                            </tr>
+                        <tr>
+    <th scope="col" style="width: 7%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">ID</th>
+    <th scope="col" style="width: 18%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Name</th>
+    <th scope="col" style="width: 22%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Email</th>
+    <th scope="col" style="width: 14%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Phone Number</th>
+    <th scope="col" style="width: 15%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Address</th>
+    <th scope="col" style="width: 14%" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Postal Code</th>
+    <th scope="col" style="width: 10%" class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">Actions</th>
+</tr>
+
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($users as $user)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $user->id }}</div>
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 avatar-cell">
-                                            <img class="avatar-img rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=random&size=128" alt="{{ $user->name }}">
-                                        </div>
-                                        <div class="ml-3">
-                                            <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-                                            <div class="text-xs text-gray-500">{{ $user->email }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $user->email }}</div>
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        @if($user->is_admin)
-                                        <span class="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded-full bg-purple-100 text-purple-800">Admin</span>
-                                        @else
-                                        <span class="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded-full bg-blue-100 text-blue-800">User</span>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $user->created_at->format('d/m/Y') }}</div>
-                                </td>
+                            <td class="px-4 py-2 whitespace-nowrap">
+    <div class="text-sm text-gray-900">{{ $user->id }}</div>
+</td>
+<td class="px-4 py-2 whitespace-nowrap">
+    <div class="flex items-center">
+        <div class="flex-shrink-0 avatar-cell">
+            <img class="avatar-img rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=random&size=128" alt="{{ $user->name }}">
+        </div>
+        <div class="ml-3">
+            <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+            <div class="text-xs text-gray-500">{{ $user->email }}</div>
+        </div>
+    </div>
+</td>
+<td class="px-4 py-2 whitespace-nowrap">
+    <div class="text-sm text-gray-900">{{ $user->email }}</div>
+</td>
+<td class="px-4 py-2 whitespace-nowrap">
+    <div class="text-sm text-gray-900">{{ $user->phone_number }}</div>
+</td>
+<td class="px-4 py-2 whitespace-nowrap">
+    <div class="text-sm text-gray-900">{{ $user->address }}</div>
+</td>
+<td class="px-4 py-2 whitespace-nowrap">
+    <div class="text-sm text-gray-900">{{ $user->postal_code }}</div>
+</td>
+
+
+
                                 <!-- In your table row where actions are defined -->
 <td class="px-4 py-2 whitespace-nowrap text-right action-cell">
     <div class="flex justify-end space-x-2">
         <!-- Show Button -->
         <a href="{{ route('admin.users.show', $user->id) }}"
-           class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50"
+           class="text-blue-600  p-1 "
            title="View Details">
             <i class="fas fa-eye fa-sm"></i>
         </a>
 
         <!-- Edit Button -->
         <a href="{{ route('admin.users.edit', $user->id) }}"
-           class="text-indigo-600 hover:text-indigo-900 p-1 rounded-full hover:bg-indigo-50"
+           class="text-green-600  p-1 "
            title="Edit">
             <i class="fas fa-edit fa-sm"></i>
         </a>
@@ -173,7 +175,7 @@
             @csrf
             @method('DELETE')
             <button type="submit"
-                    class="text-red-600 hover:text-red-900 p-1 rounded-full hover:bg-red-50"
+                    class="text-red-600  p-1 "
                     title="Delete"
                     onclick="return confirm('Are you sure you want to delete this user? ')">
                 <i class="fas fa-trash-alt fa-sm"></i>

@@ -42,13 +42,18 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+            'postal_code' => 'required|string|max:10',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
         ]);
 
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
-            'last_login' => now()
+            'postal_code' => $validated['postal_code'],
+            'address' => $validated['address'],
+            'phone_number' => $validated['phone_number'],
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
@@ -79,13 +84,18 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => 'nullable|min:8|confirmed',
+            'postal_code' => 'required|string|max:10',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
         ]);
 
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
-            'last_login' => now()
+            'postal_code' => $validated['postal_code'],
+            'address' => $validated['address'],
+            'phone_number' => $validated['phone_number'],
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');

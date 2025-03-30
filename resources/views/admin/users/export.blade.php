@@ -16,7 +16,9 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Email</th>
-                <th>Rôle</th>
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Numéro</th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +27,9 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->is_admin ? 'Admin' : 'User' }}</td>
+                <td>{{ $user->adresse }}</td>
+                <td>{{ $user->code_postal }}</td>
+                <td>{{ $user->numero }}</td>
             </tr>
             @endforeach
         </tbody>
