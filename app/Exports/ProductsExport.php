@@ -24,8 +24,7 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
             'Stock',
             'Category',
             'Image Path',
-            'Created At',
-            'Updated At'
+
         ];
     }
 
@@ -39,8 +38,7 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
             $product->stock,
             $product->category,
             $product->image,
-            $product->created_at->format('Y-m-d H:i:s'),
-            $product->updated_at->format('Y-m-d H:i:s')
+
         ];
     }
 }

@@ -81,7 +81,7 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
         Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
         // ✅ Ajout de la route pour exporter les produits (EXPORT)
-        Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
+        Route::get('/products/export/{format}', [ProductController::class, 'export'])->name('products.export');
     });
 
 
