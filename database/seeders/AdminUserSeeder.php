@@ -13,7 +13,6 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Admin User',
             'email' => 'admin@smartshop.com',
             'password' => Hash::make('adminpassword'), // Le mot de passe hashé
             // 'is_admin' => true, // Si tu utilises 'is_admin'

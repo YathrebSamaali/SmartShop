@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('address')->nullable();  // Add the address column
+            $table->string('postal_code')->nullable();  // Add the postal code column
+            $table->string('phone_number')->nullable();  // Add phone number column
             $table->timestamps();
         });
 
