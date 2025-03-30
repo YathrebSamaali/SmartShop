@@ -9,11 +9,10 @@ use Illuminate\Notifications\Notifiable;
 class Admin extends Authenticatable
 {
     use HasFactory, Notifiable;
+    protected $guard = 'admin';
 
     protected $fillable = ['email', 'password'];
-
     protected $hidden = ['password'];
-
 
     public function setPasswordAttribute($value)
     {
