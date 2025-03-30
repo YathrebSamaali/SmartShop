@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content">
-    <div class="container-fluid px-4">
+    <div class="container-fluid px-4" style="margin-left:250px;">
         <!-- Card Container -->
         <div class="bg-white rounded-xl shadow-sm overflow-hidden w-full mx-auto">
             <!-- Card Header -->

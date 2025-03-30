@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\UserProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
@@ -34,20 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+// Routes utilisateur
+// Routes utilisateur
+Route::get('/', [UserProductController::class, 'welcome'])->name('home');
+Route::get('/products', [UserProductController::class, 'index'])->name('products');
+Route::get('/products/{id}', [UserProductController::class, 'show'])->name('products.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-
-Route::get('/', function () {
-    // Récupérer tous les produits
-    $products = Product::all();
-
-    // Retourner la vue avec les produits
-    return view('welcome', compact('products'));
-});
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // ----------------------------------------------------------------------
 // 1. Routes Administrateurs avec Middleware Auth et Admin
@@ -98,6 +92,26 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
         Route::get('/users/export/{format}', [UserController::class, 'export'])->name('users.export');
     });
 
+
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // Routes pour les commandes (orders)
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+        Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+        // Route pour afficher une commande
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+        // Route pour exporter les commandes
+        Route::get('/orders/export/{format}', [OrderController::class, 'export'])->name('orders.export');
+
+        // Route pour mettre à jour le statut
+        Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    });
 // ----------------------------------------------------------------------
 // 2. Routes pour la Connexion et la Déconnexion de l'Administrateur
 // ----------------------------------------------------------------------

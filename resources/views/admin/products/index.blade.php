@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content" style="background-color: #f8f9fa; padding: 20px;">
+<div class="content" style="background-color: #f8f9fa; padding: 20px; margin-left:250px;">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>

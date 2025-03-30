@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content" style="background-color: #f8f9fa; padding: 20px;">
+<div class="content" style="background-color: #f8f9fa; padding: 20px; margin-left:250px;">
     <div class="container-fluid px-0"> <!-- Modification ici : px-0 pour supprimer le padding horizontal -->
         <div class="bg-white rounded-lg shadow-md p-6 mx-auto w-full"> <!-- Modification ici : w-full pour pleine largeur -->
             <!-- Header with Title and Close Button -->

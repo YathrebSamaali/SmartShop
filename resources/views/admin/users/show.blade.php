@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content">
-    <div class="container-fluid px-4"> <!-- Ajout de padding horizontal -->
+    <div class="container-fluid px-4" style="margin-left:250px;"> <!-- Ajout de padding horizontal -->
         <!-- Card Container élargie -->
         <div class="bg-white rounded-xl shadow-sm overflow-hidden w-full mx-auto"> <!-- Suppression de max-width et ajout de w-full -->
             <!-- Card Header -->
