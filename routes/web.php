@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 
 use App\Models\Product;
 use App\Models\Contact;
@@ -59,13 +58,8 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
     ->group(function () {
 
         // Route pour accéder au tableau de bord de l'admin
-        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('admindashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
 
-        // Gestion des utilisateurs avec le contrôleur UserController
-        Route::resource('users', UserController::class);
-
-        // Gestion des produits avec le contrôleur ProductController
-        Route::get('/products', [ProductController::class, 'index'])->name('products.index');  // <-- Cette ligne
 
         // Gestion des commandes avec le contrôleur OrderController
         Route::resource('orders', OrderController::class);
@@ -79,12 +73,12 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
         Route::get('/products', [ProductController::class, 'index'])->name('products.index');
         Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-        Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
-        Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
-        Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
         // ✅ Ajout de la route pour afficher un produit (SHOW)
-        Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+        Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
         // ✅ Ajout de la route pour exporter les produits (EXPORT)
         Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
@@ -132,16 +126,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // ----------------------------------------------------------------------
 // 3. Route protégée par le Middleware 'auth' pour afficher le Tableau de Bord
 // ----------------------------------------------------------------------
-Route::middleware(['auth'])->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Authentification admin
+
+
+    // Routes protégées admin
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::get('/admindashboard', function () {
+            return view('admin.admindashboard');
+        })->name('admindashboard');
+
+        // Vos autres routes admin...
     });
 });
-
-
 require __DIR__.'/auth.php';
-
 
 

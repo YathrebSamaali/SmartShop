@@ -22,4 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
     }
+
+    // app/Providers/RouteServiceProvider.php
+protected $namespace = 'App\\Http\\Controllers';
 }
