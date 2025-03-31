@@ -39,10 +39,21 @@ Route::middleware('auth')->group(function () {
 // Routes utilisateur
 Route::get('/', [UserProductController::class, 'welcome'])->name('home');
 Route::get('/products', [UserProductController::class, 'index'])->name('products');
-Route::get('/products/{id}', [UserProductController::class, 'show'])->name('products.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
+Route::get('/products/{id}/quickview', function($id) {
+    $product = \App\Models\Product::findOrFail($id);
 
+    return response()->json([
+        'id' => $product->id,
+        'name' => $product->name,
+        'description' => $product->description,
+        'price' => number_format($product->price, 2),
+        'stock' => $product->stock,
+        'image' => $product->image ? asset('storage/'.$product->image) : asset('images/placeholder.jpg'),
+        'category' => $product->category
+    ]);
+});
 // ----------------------------------------------------------------------
 // 1. Routes Administrateurs avec Middleware Auth et Admin
 // ----------------------------------------------------------------------

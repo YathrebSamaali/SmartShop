@@ -25,10 +25,12 @@ class UserProductController extends Controller
     }
 
     // ✅ Ajout de la méthode show
+
+
     public function show($id)
-    {
-        $product = Product::findOrFail($id);  // Récupère le produit par ID
-        return view('product.show', compact('product'));  // Assure-toi que la vue 'product.show' existe
-    }
+{
+    $product = Product::with('options.values')->findOrFail($id);
+    return view('products.quickview', compact('product'));
+}
 
 }

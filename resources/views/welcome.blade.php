@@ -74,16 +74,16 @@
                 <div class="relative group">
                 <img src="{{ $product->image ? asset('storage/'.$product->image) : asset('images/placeholder-product.jpg') }}"
                      alt="{{ $product->name }}"
-                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                     loading="lazy">
+                     class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-110"                  loading="lazy">
                     <span class="absolute top-4 left-4 bg-gray-900 text-white text-sm font-semibold px-3 py-1 rounded-full">
                         {{ number_format($product->price, 2) }} DT
                     </span>
-                    <a href="{{ route('products.show', $product->id) }}" class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#543929] hover:text-black transition">
-                            Quick View
-                        </span>
-                    </a>
+                    <a href="#" class="quick-view-btn absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+   data-product-id="{{ $product->id }}">
+    <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#543929] hover:text-white transition">
+        Quick View
+    </span>
+</a>
                 </div>
                 <div class="p-4 flex flex-col">
                     <h3 class="text-xl font-semibold text-gray-900">{{ $product->name }}</h3>
@@ -92,6 +92,8 @@
             </div>
         @endforeach
     </div>
+
+
 
     <!-- View All Products Button -->
     <div class="text-center mt-12">
@@ -231,7 +233,7 @@
                 <!-- Item 6 - Urban Streetwear -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/urban-collection.jpg') }}" alt="Urban Streetwear"
+                        <img src="{{ asset('images/collection5.jpg') }}" alt="Urban Streetwear"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Trending Now</span>
@@ -249,7 +251,7 @@
                 <!-- Item 7 - Sustainable Fashion -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/eco-collection.jpg') }}" alt="Sustainable Fashion"
+                        <img src="{{ asset('images/collection6.jpg') }}" alt="Sustainable Fashion"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Eco-Friendly</span>
@@ -267,7 +269,7 @@
                 <!-- Item 8 - Luxury Essentials -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/luxury-collection.jpg') }}" alt="Luxury Essentials"
+                        <img src="{{ asset('images/collection7.jpg') }}" alt="Luxury Essentials"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Premium</span>
@@ -285,7 +287,7 @@
                 <!-- Item 9 - Active Wear -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/active-collection.jpg') }}" alt="Active Wear"
+                        <img src="{{ asset('images/collection8.jpg') }}" alt="Active Wear"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">New Line</span>
@@ -395,8 +397,270 @@
         </div>
     </div>
 </section>
+
+<!-- Quick View Modal -->
+<!-- Quick View Modal -->
+<div id="quickViewModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal content -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <div class="w-full sm:w-1/2">
+                        <img id="modalProductImage" src="" alt="Product" class="w-full h-auto rounded-lg">
+                    </div>
+
+                    <div class="mt-4 sm:mt-0 sm:ml-4 sm:w-1/2">
+                        <h3 id="modalProductName" class="text-2xl font-bold text-gray-900"></h3>
+
+                        <!-- Price Section -->
+                        <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-medium text-gray-700">Prix:</span>
+                                <div class="flex items-center">
+                                    <span id="modalProductPrice" class="text-2xl font-bold text-[#543929]"></span>
+                                    <span id="modalProductOldPrice" class="text-lg text-gray-500 line-through ml-3 hidden"></span>
+                                </div>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Disponibilité:</span>
+                                <span id="modalProductStock" class="text-sm font-medium text-green-600"></span>
+                            </div>
+                        </div>
+
+                        <!-- Description Section -->
+                        <div class="mt-6">
+                            <h4 class="text-lg font-semibold text-[#3a2a1d] mb-2">Description du produit</h4>
+                            <div id="modalProductDescription" class="text-gray-600">
+                                <!-- Description will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Options (taille, couleur, etc.) - Ces sections seront masquées si non pertinentes -->
+                        <div id="sizeOptionsContainer" class="mt-6 hidden">
+                            <div class="mb-4">
+                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-2">Taille</h4>
+                                <div id="sizeOptions" class="flex flex-wrap gap-2">
+                                    <!-- Options de taille seront insérées ici si disponibles -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="colorOptionsContainer" class="mt-6 hidden">
+                            <div class="mb-4">
+                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-2">Couleur</h4>
+                                <div id="colorOptions" class="flex flex-wrap gap-2">
+                                    <!-- Options de couleur seront insérées ici si disponibles -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add to cart button -->
+                        <div class="mt-6">
+                            <button id="addToCartBtn" class="w-full bg-white text-black py-3 px-6 rounded-lg border-2 border-black hover:bg-black hover:text-white transition flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                                </svg>
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('quickViewModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const sizeOptionsContainer = document.getElementById('sizeOptionsContainer');
+    const colorOptionsContainer = document.getElementById('colorOptionsContainer');
+
+    // Fonction pour vérifier si l'utilisateur est connecté
+    const isUserLoggedIn = () => {
+        // Vous devez implémenter cette fonction selon votre système d'authentification
+        // Par exemple, vérifier un token dans localStorage ou un cookie
+        return localStorage.getItem('authToken') !== null;
+    };
+
+    // Fonction pour sauvegarder le produit qu'on veut ajouter au panier
+    const saveProductForLater = (productId) => {
+        localStorage.setItem('pendingCartProduct', productId);
+    };
+
+    // Fonction pour formater la description
+    const formatDescription = (description) => {
+        if (!description) return '<p class="text-gray-400">Aucune description disponible</p>';
+
+        return description.split('\n')
+            .filter(para => para.trim() !== '')
+            .map(para => {
+                if (para.startsWith('- ')) {
+                    return `<li class="ml-4 list-disc">${para.substring(2)}</li>`;
+                }
+                return `<p class="mb-2">${para}</p>`;
+            })
+            .join('');
+    };
+
+    // Fonction pour charger les données du produit depuis l'API
+    const loadProductData = async (productId) => {
+        try {
+            const response = await fetch(`/products/${productId}/quickview`);
+            if (!response.ok) {
+                throw new Error('Produit non trouvé');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Erreur lors du chargement du produit:', error);
+            return null;
+        }
+    };
+
+    // Ouvrir le modal et charger les données depuis l'API
+    quickViewBtns.forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+
+            // Afficher un indicateur de chargement
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('modalProductName').textContent = 'Chargement...';
+            document.getElementById('modalProductDescription').innerHTML = '<p>Chargement des détails du produit...</p>';
+
+            // Charger les données du produit
+            const product = await loadProductData(productId);
+
+            if (!product) {
+                alert('Erreur lors du chargement du produit');
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                return;
+            }
+
+            // Stocker l'ID du produit dans le modal pour y accéder plus tard
+            modal.dataset.productId = product.id;
+
+            // Remplir les informations du produit
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductPrice').textContent = `${product.price} DT`;
+            document.getElementById('modalProductImage').src = product.image;
+            document.getElementById('modalProductImage').alt = product.name;
+            document.getElementById('modalProductDescription').innerHTML = formatDescription(product.description);
+
+            // Gestion du stock
+            const stockElement = document.getElementById('modalProductStock');
+            if (product.stock > 0) {
+                stockElement.textContent = `En stock (${product.stock})`;
+                stockElement.className = 'text-sm font-medium text-green-600';
+                addToCartBtn.disabled = false;
+            } else {
+                stockElement.textContent = 'Rupture de stock';
+                stockElement.className = 'text-sm font-medium text-red-600';
+                addToCartBtn.disabled = true;
+            }
+
+            // Masquer l'ancien prix car non inclus dans l'API
+            document.getElementById('modalProductOldPrice').classList.add('hidden');
+
+            // Masquer les options de taille et couleur par défaut
+            sizeOptionsContainer.classList.add('hidden');
+            colorOptionsContainer.classList.add('hidden');
+        });
+    });
+
+    // Gestion du clic sur "Ajouter au panier"
+    addToCartBtn.addEventListener('click', function() {
+        const productId = modal.dataset.productId;
+
+        if (!isUserLoggedIn()) {
+            // Sauvegarder le produit pour après l'inscription
+            saveProductForLater(productId);
+
+            // Rediriger vers la page d'inscription avec un paramètre de retour
+            const currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = `/register?redirect=${currentUrl}`;
+            return;
+        }
+
+        // Si l'utilisateur est connecté, ajouter au panier normalement
+        addToCart(productId);
+    });
+
+    // Fonction pour ajouter au panier (à implémenter selon votre backend)
+    const addToCart = (productId) => {
+        // Ici, vous devez implémenter l'appel API pour ajouter au panier
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify({ product_id: productId, quantity: 1 })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Rediriger vers la page de paiement
+                window.location.href = '/checkout';
+            } else {
+                throw new Error('Erreur lors de l\'ajout au panier');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Une erreur est survenue lors de l\'ajout au panier');
+        });
+    };
+
+    // Après retour de l'inscription, vérifier s'il y a un produit en attente
+    const checkPendingProduct = () => {
+        const pendingProductId = localStorage.getItem('pendingCartProduct');
+        if (pendingProductId && isUserLoggedIn()) {
+            // Ajouter le produit au panier
+            addToCart(pendingProductId);
+            // Nettoyer le stockage
+            localStorage.removeItem('pendingCartProduct');
+        }
+    };
+
+    // Vérifier au chargement de la page
+    checkPendingProduct();
+
+    // Fermer le modal
+    closeModalBtn.addEventListener('click', function() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Fermer quand on clique en dehors du modal
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+</script>
     <!-- Footer Section -->
     @include('layouts.footer')
 
 </body>
 </html>
+
+
