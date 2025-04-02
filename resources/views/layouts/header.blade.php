@@ -42,8 +42,13 @@
 </a>
 
 
-                <a href="{{ route(name: 'register') }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 font-medium">Register</a>
-                @else
+<a href="{{ route(name: 'register') }}" class="text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+    </svg>
+</a>
+
+             @else
 
 
                     <!-- Icône Compte (connecté) -->
@@ -55,6 +60,10 @@
     </span>
 </a>
 
+<!-- Icône Paramètres (Accueil) -->
+<a href="{{ route('home') }}" class="text-white hover:text-gray-300 transition duration-300 text-xl ml-4">
+    <i class="fas fa-cog"></i>
+</a>
 
                     <!-- Icône Déconnexion -->
                     <form action="{{ route('logout') }}" method="POST" class="inline-block">

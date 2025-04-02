@@ -47,12 +47,10 @@
     </span>
 </a>
 
-                    <!-- Icône Compte (connecté) -->
-                    <a href="{{ route('home') }}" class="text-white hover:text-gray-300 transition duration-300 text-xl">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-
-                    <!-- Icône Paramètres (connecté) -->
+<!-- Icône Paramètres (Accueil) -->
+<a href="{{ route('home') }}" class="text-white hover:text-gray-300 transition duration-300 text-xl ml-4">
+    <i class="fas fa-cog"></i>
+</a>
 
 
                     <!-- Icône Déconnexion -->

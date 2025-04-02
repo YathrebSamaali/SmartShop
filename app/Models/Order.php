@@ -9,16 +9,33 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'total'];
+    protected $fillable = [
+        'order_number',
+        'customer_first_name',
+        'customer_last_name',
+        'customer_email',
+        'customer_phone',
+        'total',
+        'status',
+        'subtotal',
+        'delivery_cost',
+        'tax_amount',
+        'payment_method',
+        'delivery_method',
+        'delivery_street',
+        'delivery_city',
+        'delivery_zip_code',
+        'delivery_country',
+        'notes'
+    ];
 
-    // Relation avec Customer (une commande appartient à un client)
-    public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    protected $casts = [
+        'total' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+        'delivery_cost' => 'decimal:2',
+        'tax_amount' => 'decimal:2'
+    ];
 
-
-    // Relation avec OrderItem (une commande contient plusieurs articles)
     public function items()
     {
         return $this->hasMany(OrderItem::class);

@@ -27,4 +27,12 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,        // Ajoutez cette ligne
     ];
 
+    protected $middlewareGroups = [
+        'web' => [
+            // ...
+            \App\Http\Middleware\TransferCartMiddleware::class,
+        ],
+    ];
 }
+
+

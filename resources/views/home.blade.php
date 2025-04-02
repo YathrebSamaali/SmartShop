@@ -19,6 +19,20 @@
                 <p>{{ session('welcome_message') }}</p>
             </div>
         @endif
+        <!-- Dans resources/views/home.blade.php ou votre layout -->
+@if(session('success'))
+<div class="fixed top-4 right-4 z-50">
+    <div class="bg-green-500 text-white px-6 py-3 rounded-md shadow-lg flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        {{ session('success') }}
+        <a href="{{ route('orders.show', session('order_number')) }}" class="ml-4 text-white underline">
+            Voir la commande
+        </a>
+    </div>
+</div>
+@endif
 
         <!-- Hero Section -->
         <section class="bg-gradient-to-r from-[#543929] to-[#3a2a1d] rounded-lg text-black p-8 md:p-12 mb-12" style="margin: 150px;">

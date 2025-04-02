@@ -49,8 +49,6 @@
         </div>
     </div>
 
-    <!-- Footer de la page -->
-    @include('layouts.footer')
 
     <!-- Inclusion du fichier JS -->
     <script src="{{ asset('js/product.js') }}"></script> <!-- Lien vers le fichier product.js -->

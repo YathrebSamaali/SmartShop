@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Product;
 use App\Models\Contact;
@@ -61,26 +62,25 @@ Route::get('/cart', function () {
 
 // Ou si vous avez un contrôleur :
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
 
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.remove');
-//Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 
-// Exemple de route sécurisée
+Route::get('/products/{product}', [UserProductController::class, 'show'])->name('products.show');
+Route::match(['put', 'patch'], '/cart/{item}', [CartController::class, 'update'])
+     ->name('cart.update');
+
+
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+Route::get('/checkout/confirmation/{order}', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 // routes/web.php
-
-
-
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-
-// Routes produits
-
-
-
-
 
 // ----------------------------------------------------------------------
 // 1. Routes Administrateurs avec Middleware Auth et Admin
