@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Models\Product;
 use App\Models\Contact;
 
@@ -54,6 +55,33 @@ Route::get('/products/{id}/quickview', function($id) {
         'category' => $product->category
     ]);
 });
+Route::get('/cart', function () {
+    return view('cart'); // Assurez-vous d'avoir une vue cart.blade.php
+})->name('cart');
+
+// Ou si vous avez un contrôleur :
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.remove');
+//Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
+
+// Exemple de route sécurisée
+// routes/web.php
+
+
+
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
+// Routes produits
+
+
+
+
+
 // ----------------------------------------------------------------------
 // 1. Routes Administrateurs avec Middleware Auth et Admin
 // ----------------------------------------------------------------------

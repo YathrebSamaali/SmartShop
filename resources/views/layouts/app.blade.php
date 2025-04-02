@@ -1,37 +1,61 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">    <title>@yield('title', 'Mon E-Commerce')</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    @stack('styles')
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-xl font-bold">Mon E-Commerce</a>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+            <nav class="flex items-center space-x-6">
+                <a href="/products" class="hover:text-blue-600">Boutique</a>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                @auth
+                    <div class="relative">
+                        <a href="{{ route('cart') }}" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            @inject('cartService', 'App\Services\CartService')
+                            <span class="cart-count absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                {{ $cartService->getCount(auth()->id()) }}
+                            </span>
+                        </a>
                     </div>
-                </header>
-            @endisset
 
-              <!-- Main Content -->
-              <div class="flex-1 ms-64 p-4">
-
-                @yield('content')
-            </div>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="hover:text-blue-600">Déconnexion</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="hover:text-blue-600">Connexion</a>
+                    <a href="{{ route('register') }}" class="hover:text-blue-600">Inscription</a>
+                @endauth
+            </nav>
         </div>
-    </body>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-8">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @yield('content')
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <!-- Contenu du footer -->
+        </div>
+    </footer>
+
+    @stack('scripts')
+</body>
 </html>

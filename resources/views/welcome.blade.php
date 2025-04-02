@@ -80,7 +80,7 @@
                     </span>
                     <a href="#" class="quick-view-btn absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
    data-product-id="{{ $product->id }}">
-    <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#543929] hover:text-white transition">
+    <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md  transition">
         Quick View
     </span>
 </a>
@@ -400,7 +400,7 @@
 
 <!-- Quick View Modal -->
 <!-- Quick View Modal -->
-<div id="quickViewModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+<div id="quickViewModal" class="fixed inset-0 z-50 hidden overflow-y-auto" data-redirect-url="{{ route('cart') }}">
     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <!-- Background overlay -->
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -493,8 +493,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour vérifier si l'utilisateur est connecté
     const isUserLoggedIn = () => {
-        // Vous devez implémenter cette fonction selon votre système d'authentification
-        // Par exemple, vérifier un token dans localStorage ou un cookie
         return localStorage.getItem('authToken') !== null;
     };
 
@@ -586,48 +584,57 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Gestion du clic sur "Ajouter au panier"
-    addToCartBtn.addEventListener('click', function() {
-        const productId = modal.dataset.productId;
+   // Gestion du clic sur "Ajouter au panier"
+addToCartBtn.addEventListener('click', function() {
+    const productId = modal.dataset.productId;
+    addToCart(productId);
+});
 
-        if (!isUserLoggedIn()) {
-            // Sauvegarder le produit pour après l'inscription
-            saveProductForLater(productId);
+// Fonction pour ajouter au panier (version simplifiée)
+const addToCart = (productId) => {
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ product_id: productId, quantity: 1 })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            // Mettre à jour le compteur du panier
+            updateCartCounter(data.cart_count);
 
-            // Rediriger vers la page d'inscription avec un paramètre de retour
-            const currentUrl = encodeURIComponent(window.location.href);
-            window.location.href = `/register?redirect=${currentUrl}`;
-            return;
+            // Afficher un message de succès
+            alert('Produit ajouté au panier avec succès!');
+
+            // Fermer le modal
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        } else {
+            alert(data.message || 'Erreur lors de l\'ajout au panier');
         }
-
-        // Si l'utilisateur est connecté, ajouter au panier normalement
-        addToCart(productId);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Une erreur est survenue lors de l\'ajout au panier');
     });
+};
 
-    // Fonction pour ajouter au panier (à implémenter selon votre backend)
-    const addToCart = (productId) => {
-        // Ici, vous devez implémenter l'appel API pour ajouter au panier
-        fetch('/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            },
-            body: JSON.stringify({ product_id: productId, quantity: 1 })
-        })
-        .then(response => {
-            if (response.ok) {
-                // Rediriger vers la page de paiement
-                window.location.href = '/checkout';
-            } else {
-                throw new Error('Erreur lors de l\'ajout au panier');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Une erreur est survenue lors de l\'ajout au panier');
-        });
-    };
+// Fonction pour mettre à jour le compteur du panier
+const updateCartCounter = (count) => {
+    const cartCountElement = document.getElementById('cart-count');
+    if(cartCountElement) {
+        cartCountElement.textContent = count;
 
+        // Animation pour le feedback visuel
+        cartCountElement.classList.add('animate-bounce');
+        setTimeout(() => {
+            cartCountElement.classList.remove('animate-bounce');
+        }, 1000);
+    }
+};
     // Après retour de l'inscription, vérifier s'il y a un produit en attente
     const checkPendingProduct = () => {
         const pendingProductId = localStorage.getItem('pendingCartProduct');
@@ -656,9 +663,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
 </script>
     <!-- Footer Section -->
     @include('layouts.footer')
+
 
 </body>
 </html>

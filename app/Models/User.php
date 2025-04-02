@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -45,5 +46,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    
+// app/Models/User.php
+public function cartItems()
+{
+    return $this->hasMany(OrderItem::class, 'user_id')
+                ->whereNull('order_id'); // seulement les items non commandés
+}
+
 }

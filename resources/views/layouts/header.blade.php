@@ -4,6 +4,9 @@
 <!-- Tailwind CSS -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 
+<!-- Font Awesome pour les icônes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <!-- resources/views/layouts/header.blade.php -->
 <nav class="bg-gray-900 p-4 shadow-lg fixed w-full top-0 left-0 z-50">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -28,16 +31,37 @@
             <a href="{{ route('products') }}" class="text-white hover:text-gray-300 transition duration-300 font-medium">Products</a>
             <a href="{{ route('contact') }}" class="text-white hover:text-gray-300 transition duration-300 font-medium">Contact</a>
 
-            <!-- Authentication Links -->
+            <!-- Authentication Links avec icônes -->
             <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 pt-4 md:pt-0 border-t md:border-t-0 border-gray-700 w-full md:w-auto text-center">
                 @guest
-                    <a href="{{ route('login') }}" class="text-white hover:text-gray-300 transition duration-300 font-medium">Login</a>
-                    <a href="{{ route('register') }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 font-medium">Register</a>
+                <a href="{{ route('cart') }}" class="text-white hover:text-gray-300 transition duration-300 text-xl relative">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        {{ \App\Http\Controllers\CartController::getCartCount() }}
+    </span>
+</a>
+
+
+                <a href="{{ route(name: 'register') }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 font-medium">Register</a>
                 @else
-                    <a href="{{ route('home') }}" class="text-white hover:text-gray-300 transition duration-300 font-medium">Dashboard</a>
+
+
+                    <!-- Icône Compte (connecté) -->
+              <!-- Icône Panier -->
+<a href="{{ route('cart') }}" class="text-white hover:text-gray-300 transition duration-300 text-xl relative">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        {{ \App\Http\Controllers\CartController::getCartCount() }}
+    </span>
+</a>
+
+
+                    <!-- Icône Déconnexion -->
                     <form action="{{ route('logout') }}" method="POST" class="inline-block">
                         @csrf
-                        <button type="submit" class="text-white hover:text-gray-300 transition duration-300 font-medium">Logout</button>
+                        <button type="submit" class="text-white hover:text-gray-300 transition duration-300 text-xl">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
                     </form>
                 @endguest
             </div>

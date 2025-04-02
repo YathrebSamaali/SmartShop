@@ -33,4 +33,5 @@ class UserProductController extends Controller
     return view('products.quickview', compact('product'));
 }
 
+
 }
