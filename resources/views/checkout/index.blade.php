@@ -20,7 +20,7 @@
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-900">Finalisation de la commande</h1>
         <span class="text-gray-600">
-            <span id="cart-count">{{ count($cartItems) }}</span> article(s) - 
+            <span id="cart-count">{{ count($cartItems) }}</span> article(s) -
             <span class="font-medium">{{ number_format($total, 2) }} DT</span>
         </span>
     </div>
@@ -36,69 +36,93 @@
                 <div class="p-6">
                     <form id="checkout-form" action="{{ route('checkout.process') }}" method="POST">
                         @csrf
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
-                                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">Prénom*</label>
-                                <input type="text" id="first_name" name="first_name" required
+                                <label for="customer_first_name" class="block text-sm font-medium text-gray-700 mb-1">Prénom*</label>
+                                <input type="text" id="customer_first_name" name="customer_first_name" required
                                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                       value="{{ auth()->user()->first_name ?? old('first_name') }}">
+                                       value="{{ auth()->user()->first_name ?? old('customer_first_name') }}">
+                                @error('customer_first_name')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Nom*</label>
-                                <input type="text" id="last_name" name="last_name" required
+                                <label for="customer_last_name" class="block text-sm font-medium text-gray-700 mb-1">Nom*</label>
+                                <input type="text" id="customer_last_name" name="customer_last_name" required
                                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                       value="{{ auth()->user()->last_name ?? old('last_name') }}">
+                                       value="{{ auth()->user()->last_name ?? old('customer_last_name') }}">
+                                @error('customer_last_name')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
-                            <input type="email" id="email" name="email" required
+                            <label for="customer_email" class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+                            <input type="email" id="customer_email" name="customer_email" required
                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                   value="{{ auth()->user()->email ?? old('email') }}">
+                                   value="{{ auth()->user()->email ?? old('customer_email') }}">
+                            @error('customer_email')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone*</label>
-                            <input type="tel" id="phone" name="phone" required
+                            <label for="customer_phone" class="block text-sm font-medium text-gray-700 mb-1">Téléphone*</label>
+                            <input type="tel" id="customer_phone" name="customer_phone" required
                                    class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                   value="{{ auth()->user()->phone ?? old('phone') }}">
+                                   value="{{ auth()->user()->phone ?? old('customer_phone') }}">
+                            @error('customer_phone')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Section Adresse -->
                         <div class="mt-8">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Adresse de livraison</h3>
-                            
+
                             <div class="mb-4">
-                                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Adresse*</label>
-                                <input type="text" id="address" name="address" required
+                                <label for="delivery_street" class="block text-sm font-medium text-gray-700 mb-1">Adresse*</label>
+                                <input type="text" id="delivery_street" name="delivery_street" required
                                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                       value="{{ auth()->user()->address ?? old('address') }}">
+                                       value="{{ auth()->user()->address ?? old('delivery_street') }}">
+                                @error('delivery_street')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
-                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville*</label>
-                                    <input type="text" id="city" name="city" required
+                                    <label for="delivery_city" class="block text-sm font-medium text-gray-700 mb-1">Ville*</label>
+                                    <input type="text" id="delivery_city" name="delivery_city" required
                                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                           value="{{ auth()->user()->city ?? old('city') }}">
+                                           value="{{ auth()->user()->city ?? old('delivery_city') }}">
+                                    @error('delivery_city')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
-                                    <label for="zip_code" class="block text-sm font-medium text-gray-700 mb-1">Code postal*</label>
-                                    <input type="text" id="zip_code" name="zip_code" required
+                                    <label for="delivery_zip_code" class="block text-sm font-medium text-gray-700 mb-1">Code postal*</label>
+                                    <input type="text" id="delivery_zip_code" name="delivery_zip_code" required
                                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                           value="{{ auth()->user()->zip_code ?? old('zip_code') }}">
+                                           value="{{ auth()->user()->zip_code ?? old('delivery_zip_code') }}">
+                                    @error('delivery_zip_code')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div>
-                                    <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Pays*</label>
-                                    <select id="country" name="country" required
+                                    <label for="delivery_country" class="block text-sm font-medium text-gray-700 mb-1">Pays*</label>
+                                    <select id="delivery_country" name="delivery_country" required
                                             class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="Tunisie" selected>Tunisie</option>
-                                        <option value="France">France</option>
-                                        <option value="Algérie">Algérie</option>
-                                        <option value="Maroc">Maroc</option>
+                                        <option value="Tunisie" {{ (auth()->user()->country ?? old('delivery_country')) == 'Tunisie' ? 'selected' : '' }}>Tunisie</option>
+                                        <option value="France" {{ (auth()->user()->country ?? old('delivery_country')) == 'France' ? 'selected' : '' }}>France</option>
+                                        <option value="Algérie" {{ (auth()->user()->country ?? old('delivery_country')) == 'Algérie' ? 'selected' : '' }}>Algérie</option>
+                                        <option value="Maroc" {{ (auth()->user()->country ?? old('delivery_country')) == 'Maroc' ? 'selected' : '' }}>Maroc</option>
                                     </select>
+                                    @error('delivery_country')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -106,7 +130,7 @@
                         <!-- Section Livraison -->
                         <div class="mt-8">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Méthode de livraison</h3>
-                            
+
                             <div class="space-y-3">
                                 <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
                                     <input type="radio" id="delivery-standard" name="delivery_method" value="standard" checked
@@ -116,7 +140,7 @@
                                         <span class="block text-sm text-gray-500">3-5 jours ouvrables - 7.00 DT</span>
                                     </label>
                                 </div>
-                                
+
                                 <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
                                     <input type="radio" id="delivery-express" name="delivery_method" value="express"
                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
@@ -126,6 +150,46 @@
                                     </label>
                                 </div>
                             </div>
+                            @error('delivery_method')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Section Paiement -->
+                        <div class="mt-8">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Méthode de paiement</h3>
+
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
+                                    <input type="radio" id="payment-cash" name="payment_method" value="cash" checked
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <label for="payment-cash" class="ml-3 block">
+                                        <span class="font-medium text-gray-700">Paiement à la livraison</span>
+                                        <span class="block text-sm text-gray-500">Espèces</span>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
+                                    <input type="radio" id="payment-credit-card" name="payment_method" value="credit_card"
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <label for="payment-credit-card" class="ml-3 block">
+                                        <span class="font-medium text-gray-700">Carte bancaire</span>
+                                        <span class="block text-sm text-gray-500">Paiement sécurisé</span>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
+                                    <input type="radio" id="payment-bank-transfer" name="payment_method" value="bank_transfer"
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <label for="payment-bank-transfer" class="ml-3 block">
+                                        <span class="font-medium text-gray-700">Virement bancaire</span>
+                                        <span class="block text-sm text-gray-500">Transfert bancaire</span>
+                                    </label>
+                                </div>
+                            </div>
+                            @error('payment_method')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Section Commentaires -->
@@ -133,12 +197,12 @@
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Commentaires</h3>
                             <textarea id="notes" name="notes" rows="3"
                                       class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                      placeholder="Notes supplémentaires (optionnel)"></textarea>
+                                      placeholder="Notes supplémentaires (optionnel)">{{ old('notes') }}</textarea>
                         </div>
                     </form>
                 </div>
             </div>
-            
+
             <!-- Bouton de retour -->
             <a href="{{ route('cart') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800">
                 <i class="fas fa-arrow-left mr-2"></i> Retour au panier
@@ -156,8 +220,10 @@
                     <div class="flex justify-between items-start mb-4 pb-4 border-b border-gray-100">
                         <div class="flex items-center">
                             <div class="w-12 h-12 bg-gray-200 rounded-md overflow-hidden mr-3">
-                                @if($item->product->image)
+                                @if(isset($item->product->image))
                                     <img src="{{ asset('storage/'.$item->product->image) }}" class="w-full h-full object-cover">
+                                @elseif(isset($item['product']->image))
+                                    <img src="{{ asset('storage/'.$item['product']->image) }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full bg-gray-300 flex items-center justify-center">
                                         <i class="fas fa-image text-gray-400 text-xs"></i>
@@ -165,11 +231,18 @@
                                 @endif
                             </div>
                             <div>
-                                <h4 class="text-sm font-medium text-gray-900">{{ $item->product->name }}</h4>
-                                <p class="text-xs text-gray-500">{{ $item->quantity }} × {{ number_format($item->price, 2) }} DT</p>
+                                <h4 class="text-sm font-medium text-gray-900">
+                                    {{ $item->product->name ?? $item['product']->name }}
+                                </h4>
+                                <p class="text-xs text-gray-500">
+                                    {{ $item->quantity ?? $item['quantity'] }} ×
+                                    {{ number_format($item->price ?? $item['price'] ?? $item['product']->price, 2) }} DT
+                                </p>
                             </div>
                         </div>
-                        <span class="text-sm font-medium">{{ number_format($item->price * $item->quantity, 2) }} DT</span>
+                        <span class="text-sm font-medium">
+                            {{ number_format(($item->price ?? $item['price'] ?? $item['product']->price) * ($item->quantity ?? $item['quantity']), 2) }} DT
+                        </span>
                     </div>
                     @endforeach
 
@@ -191,46 +264,12 @@
                         </div>
                     </div>
 
-                    <!-- Section Paiement -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-3">Méthode de paiement</h3>
-                        
-                        <div class="space-y-3">
-                        <div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
-    <input type="radio" id="payment-cash" name="payment_method" value="cash" checked
-           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-    <label for="payment-cash" class="ml-3 block">
-        <span class="font-medium text-gray-700">Paiement à la livraison</span>
-        <span class="block text-sm text-gray-500">Espèces</span>
-    </label>
-</div>
-
-<div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
-    <input type="radio" id="payment-credit-card" name="payment_method" value="credit_card"
-           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-    <label for="payment-credit-card" class="ml-3 block">
-        <span class="font-medium text-gray-700">Carte bancaire</span>
-        <span class="block text-sm text-gray-500">Paiement sécurisé</span>
-    </label>
-</div>
-
-<div class="flex items-center p-3 border border-gray-200 rounded-md hover:border-blue-500 transition cursor-pointer">
-    <input type="radio" id="payment-bank-transfer" name="payment_method" value="bank_transfer"
-           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-    <label for="payment-bank-transfer" class="ml-3 block">
-        <span class="font-medium text-gray-700">Virement bancaire</span>
-        <span class="block text-sm text-gray-500">Transfert bancaire</span>
-    </label>
-</div>
-                        </div>
-                    </div>
-
                     <button type="submit" form="checkout-form" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 font-medium flex items-center justify-center">
                         <i class="fas fa-lock mr-2"></i> Confirmer la commande
                     </button>
-                    
+
                     <p class="mt-3 text-xs text-gray-500">
-                        En passant votre commande, vous acceptez nos 
+                        En passant votre commande, vous acceptez nos
                         <a href="#" class="text-blue-600 hover:underline">Conditions Générales de Vente</a>.
                     </p>
                 </div>
@@ -246,19 +285,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const deliveryCostElement = document.getElementById('delivery-cost');
     const totalWithShippingElement = document.getElementById('total-with-shipping');
     const subtotal = {{ $total }};
-    
+
     function updateShippingCost() {
         const selectedMethod = document.querySelector('input[name="delivery_method"]:checked').value;
         let cost = 7.00; // Standard par défaut
-        
+
         if (selectedMethod === 'express') {
             cost = 15.00;
         }
-        
+
         deliveryCostElement.textContent = cost.toFixed(2) + ' DT';
         totalWithShippingElement.textContent = (subtotal + cost).toFixed(2) + ' DT';
     }
-    
+
     deliveryMethods.forEach(method => {
         method.addEventListener('change', updateShippingCost);
     });

@@ -27,7 +27,7 @@
             <div class="col-span-6 flex items-center">
                 <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden mr-4">
                     @if($item->product->image)
-                        <img src="{{ asset('storage/' . $item->product->image) }}" 
+                        <img src="{{ asset('storage/' . $item->product->image) }}"
                              alt="{{ $item->product->name }}"
                              class="w-full h-full object-cover">
                     @else
@@ -62,13 +62,13 @@
                 <form action="{{ route('cart.update', $item->id) }}" method="POST" class="flex items-center">
                     @csrf
                     @method('PATCH')
-                    <button type="button" onclick="updateQuantity(this, -1)" 
+                    <button type="button" onclick="updateQuantity(this, -1)"
                             class="bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300 transition">
                         <i class="fas fa-minus text-xs"></i>
                     </button>
-                    <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" 
+                    <input type="number" name="quantity" value="{{ $item->quantity }}" min="1"
                            class="w-12 text-center border-t border-b border-gray-200 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <button type="button" onclick="updateQuantity(this, 1)" 
+                    <button type="button" onclick="updateQuantity(this, 1)"
                             class="bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300 transition">
                         <i class="fas fa-plus text-xs"></i>
                     </button>
@@ -89,7 +89,7 @@
             <div class="mb-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Code promotionnel</h3>
                 <div class="flex">
-                    <input type="text" placeholder="Entrez votre code promo" 
+                    <input type="text" placeholder="Entrez votre code promo"
                            class="flex-grow border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition">
                         Appliquer
@@ -103,19 +103,19 @@
                     <span class="text-gray-600">Sous-total</span>
                     <span class="font-medium">{{ number_format($total, 2) }} DT</span>
                 </div>
-                
+
                 <div class="flex justify-between items-center mb-3 text-gray-600">
                     <span>Réduction</span>
                     <span>- 0.00 DT</span>
                 </div>
-                
+
                 <div class="flex justify-between items-center mb-3 text-gray-600">
                     <span>Livraison</span>
                     <span>Calculée à l'étape suivante</span>
                 </div>
-                
+
                 <div class="border-t border-gray-200 my-3"></div>
-                
+
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xl font-bold text-gray-900">Total</h3>
                     <div class="text-2xl font-bold text-blue-600">{{ number_format($total, 2) }} DT</div>
@@ -124,11 +124,11 @@
 
             <!-- Boutons d'action -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="{{ route('products') }}" 
+                <a href="{{ route('products') }}"
                    class="bg-white text-gray-800 border border-gray-300 py-3 px-6 rounded-md hover:bg-gray-100 transition duration-300 flex items-center justify-center">
                     <i class="fas fa-arrow-left mr-2"></i> Continuer mes achats
                 </a>
-                <a href="{{ route('checkout') }}" 
+                <a href="{{ route('checkout') }}"
                    class="bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center font-medium">
                     Passer la commande <i class="fas fa-arrow-right ml-2"></i>
                 </a>
@@ -162,7 +162,7 @@
 function showToast(message, type = 'success') {
     const toast = document.getElementById('cart-toast');
     const toastMessage = document.getElementById('toast-message');
-    
+
     // Changer la couleur selon le type
     const colors = {
         success: 'bg-green-500',
@@ -171,11 +171,11 @@ function showToast(message, type = 'success') {
     };
     toast.className = toast.className.replace(/bg-\w+-\d+/g, colors[type]);
     toastMessage.textContent = message;
-    
+
     // Afficher
     toast.classList.remove('hidden');
     toast.classList.add('flex', 'opacity-100');
-    
+
     // Masquer après délai
     setTimeout(() => {
         toast.classList.remove('opacity-100');
@@ -192,7 +192,7 @@ function updateQuantity(button, change) {
     const form = button.closest('form');
     const input = form.querySelector('input[name="quantity"]');
     const newValue = parseInt(input.value) + change;
-    
+
     if (newValue >= input.min) {
         input.value = newValue;
         form.submit();
@@ -203,7 +203,7 @@ function updateQuantity(button, change) {
 document.addEventListener('DOMContentLoaded', function() {
     const promoInput = document.querySelector('input[placeholder="Entrez votre code promo"]');
     const promoButton = promoInput.nextElementSibling;
-    
+
     promoButton.addEventListener('click', function() {
         const code = promoInput.value.trim();
         if (code) {
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('Veuillez entrer un code promo', 'error');
         }
     });
-    
+
     // Afficher un toast si présent dans l'URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('added')) {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -16,7 +17,6 @@ class Order extends Model
         'customer_email',
         'customer_phone',
         'total',
-        'status',
         'subtotal',
         'delivery_cost',
         'tax_amount',
@@ -26,18 +26,23 @@ class Order extends Model
         'delivery_city',
         'delivery_zip_code',
         'delivery_country',
-        'notes'
+        'notes',
+        'status'
     ];
 
-    protected $casts = [
-        'total' => 'decimal:2',
-        'subtotal' => 'decimal:2',
-        'delivery_cost' => 'decimal:2',
-        'tax_amount' => 'decimal:2'
+    protected $attributes = [
+        'status' => 'pending',
+        'tax_amount' => 0,
     ];
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // Méthode pour générer un numéro de commande
+    public static function generateOrderNumber(): string
+    {
+        return 'ORD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
     }
 }
