@@ -100,21 +100,47 @@ class CheckoutController extends Controller
     }
 
     private function getCartItems()
-    {
-        if (auth()->check()) {
-            return auth()->user()->cartItems()->with('product')->get();
-        }
+{
+    $items = auth()->check()
+        ? $this->getAuthenticatedUserCartItems()
+        : $this->getGuestCartItems();
 
-        return collect(session('cart', []))->map(function ($item, $productId) {
-            return [
-                'product_id' => $productId,
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-                'product' => Product::find($productId)
-            ];
-        });
+    return $items->filter(function($item) {
+        return $this->isValidCartItem($item);
+    });
+}
+
+private function getAuthenticatedUserCartItems()
+{
+    return auth()->user()->cartItems()
+        ->with(['product' => function($query) {
+            $query->where('is_available', true);
+        }])
+        ->get();
+}
+
+private function getGuestCartItems()
+{
+    return collect(session('cart', []))->map(function ($item, $productId) {
+        $product = Product::find($productId);
+
+        return $product ? [
+            'product_id' => $productId,
+            'quantity' => $item['quantity'],
+            'price' => $item['price'],
+            'product' => $product
+        ] : null;
+    })->filter();
+}
+
+private function isValidCartItem($item)
+{
+    if (is_array($item)) {
+        return isset($item['product']);
     }
 
+    return $item->product !== null;
+}
     private function calculateCartTotal($cartItems)
     {
         return $cartItems->sum(function($item) {

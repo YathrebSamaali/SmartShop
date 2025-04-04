@@ -231,9 +231,15 @@
                                 @endif
                             </div>
                             <div>
-                                <h4 class="text-sm font-medium text-gray-900">
-                                    {{ $item->product->name ?? $item['product']->name }}
-                                </h4>
+                            <h4 class="text-sm font-medium text-gray-900">
+    @if(isset($item->product))
+        {{ $item->product->name }}
+    @elseif(isset($item['product']))
+        {{ $item['product']->name }}
+    @else
+        Produit indisponible
+    @endif
+</h4>
                                 <p class="text-xs text-gray-500">
                                     {{ $item->quantity ?? $item['quantity'] }} ×
                                     {{ number_format($item->price ?? $item['price'] ?? $item['product']->price, 2) }} DT

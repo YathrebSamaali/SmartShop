@@ -72,7 +72,7 @@
         @foreach ($products->take(8) as $product) <!-- Limite à 8 produits -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl product-item" data-category="{{ $product->category }}">
                 <div class="relative group">
-                <img src="{{ $product->image ? asset('storage/'.$product->image) : asset('images/placeholder-product.jpg') }}"
+                <img src="{{ $product->image ? asset(path: 'storage/'.$product->image) : asset('images/placeholder-product.jpg') }}"
                      alt="{{ $product->name }}"
                      class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-110"                  loading="lazy">
                     <span class="absolute top-4 left-4 bg-gray-900 text-white text-sm font-semibold px-3 py-1 rounded-full">
@@ -257,7 +257,7 @@
                 <!-- Item 4 -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection4.png') }}" alt="Winter Collection"
+                        <img src="{{ asset('images/collection4.PNG') }}" alt="Winter Collection"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Exclusive</span>
@@ -275,7 +275,7 @@
                 <!-- Item 5 -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection5.png') }}" alt="Limited Edition"
+                        <img src="{{ asset('images/collection5.jpg') }}" alt="Limited Edition"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Limited Edition</span>
@@ -295,7 +295,7 @@
                 <!-- Item 6 - Urban Streetwear -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection5.jpg') }}" alt="Urban Streetwear"
+                        <img src="{{ asset('images/collection6.jpg') }}" alt="Urban Streetwear"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Trending Now</span>
@@ -313,7 +313,7 @@
                 <!-- Item 7 - Sustainable Fashion -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection6.jpg') }}" alt="Sustainable Fashion"
+                        <img src="{{ asset('images/collection7.jpg') }}" alt="Sustainable Fashion"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Eco-Friendly</span>
@@ -331,7 +331,7 @@
                 <!-- Item 8 - Luxury Essentials -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection7.jpg') }}" alt="Luxury Essentials"
+                        <img src="{{ asset('images/collection8.jpg') }}" alt="Luxury Essentials"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">Premium</span>
@@ -349,7 +349,7 @@
                 <!-- Item 9 - Active Wear -->
                 <div class="flex-shrink-0 w-4/5 md:w-1/3 lg:w-1/5 snap-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-96 transition-all duration-500 hover:shadow-2xl">
-                        <img src="{{ asset('images/collection8.jpg') }}" alt="Active Wear"
+                        <img src="{{ asset('images/collection9.jpg') }}" alt="Active Wear"
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6">
                             <span class="text-sm text-white/80 mb-1">New Line</span>
