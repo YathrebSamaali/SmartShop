@@ -4,29 +4,45 @@
 @section('content')
         @include('layouts.header')
 
-     <!-- Products Section -->
+<!-- Products Section -->
 <section id="products" class="py-12 bg-gray-100">
-
-
-
+    <!-- Category Filters - Aligné à droite -->
+    <div class="container mx-auto px-4 mb-8">
+    <div class="flex justify-end mr-32">  <!-- Ajout de mr-8 pour un décalage partiel -->
+        <div class="relative w-64">
+            <select id="category-filter" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                <option value="all">All Products</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+                <option value="shoes">Shoes</option>
+                <!-- Ajoutez d'autres options selon vos besoins -->
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Products Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-36" id="product-grid">
-        @foreach ($products as $product) <!-- Limite à 8 produits -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl product-item" data-category="{{ $product->category }}">
+        @foreach ($products as $product)
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl product-item" data-category="{{ strtolower($product->category) }}">
                 <div class="relative group">
-                <img src="{{ $product->image ? asset('storage/'.$product->image) : asset('images/placeholder-product.jpg') }}"
-                     alt="{{ $product->name }}"
-                     class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-110"                  loading="lazy">
+                    <img src="{{ $product->image ? asset('storage/'.$product->image) : asset('images/placeholder-product.jpg') }}"
+                         alt="{{ $product->name }}"
+                         class="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-110" loading="lazy">
                     <span class="absolute top-4 left-4 bg-gray-900 text-white text-sm font-semibold px-3 py-1 rounded-full">
                         {{ number_format($product->price, 2) }} DT
                     </span>
                     <a href="#" class="quick-view-btn absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-   data-product-id="{{ $product->id }}">
-   <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md  transition">
-        Quick View
-    </span>
-</a>
+                       data-product-id="{{ $product->id }}">
+                        <span class="bg-white text-[#543929] font-semibold py-2 px-4 rounded-lg shadow-md transition">
+                            Quick View
+                        </span>
+                    </a>
                 </div>
                 <div class="p-4 flex flex-col">
                     <h3 class="text-xl font-semibold text-gray-900">{{ $product->name }}</h3>
@@ -34,35 +50,58 @@
                 </div>
             </div>
         @endforeach
-    </div>    <!-- Inclusion du fichier JS -->
-    <script src="{{ asset('js/product.js') }}"></script> <!-- Lien vers le fichier product.js -->
+    </div>
+
     <!-- JavaScript for Category Filter -->
-<script>
-    // Sélectionner tous les boutons de catégorie
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    const productItems = document.querySelectorAll('.product-item');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryFilter = document.getElementById('category-filter');
+            const productItems = document.querySelectorAll('.product-item');
 
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const category = this.getAttribute('data-category'); // Récupérer la catégorie du bouton cliqué
+            function filterProducts(category) {
+                productItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
 
-            // Afficher ou masquer les produits selon la catégorie
-            productItems.forEach(item => {
-                const itemCategory = item.getAttribute('data-category').toLowerCase();
+                    if (category === 'all' || itemCategory === category.toLowerCase()) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease-in-out';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
 
-                if (category === 'all' || itemCategory === category.toLowerCase()) {
-                    item.style.display = 'block'; // Afficher le produit
-                } else {
-                    item.style.display = 'none'; // Masquer le produit
-                }
+            // Écouteur pour le changement de sélection
+            categoryFilter.addEventListener('change', function() {
+                filterProducts(this.value);
             });
 
-            // Mettre à jour l'apparence des boutons (par exemple, ajouter une classe active)
-            categoryButtons.forEach(btn => btn.classList.remove('bg-gray-100', 'font-semibold'));
-            this.classList.add('bg-gray-100', 'font-semibold');
+            // Appliquer le filtre si paramètre dans l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            if (categoryParam) {
+                categoryFilter.value = categoryParam;
+                filterProducts(categoryParam);
+            }
         });
-    });
-</script>
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Style supplémentaire pour le select */
+        #category-filter {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        #category-filter:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</section>
 <!-- Quick View Modal -->
 <!-- Quick View Modal -->
 <div id="quickViewModal" class="fixed inset-0 z-50 hidden overflow-y-auto" data-redirect-url="{{ route('cart') }}">
