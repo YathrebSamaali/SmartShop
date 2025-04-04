@@ -60,6 +60,14 @@
             <i class="fas fa-chevron-right ms-auto fs-6"></i>
         </a>
     </div>
+
+    <!-- Replace any GET logout links with a POST form -->
+<form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
+    @csrf
+    <button type="submit" class="btn btn-link text-decoration-none">
+        <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </button>
+</form>
 </div>
 
 <style>

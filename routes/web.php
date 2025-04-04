@@ -136,21 +136,15 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
     Route::prefix('admin')->name('admin.')->group(function () {
         // Routes pour les commandes (orders)
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
-        Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-        Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-        Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
         Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-
-        // Route pour afficher une commande
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-
-        // Route pour exporter les commandes
         Route::get('/orders/export/{format}', [OrderController::class, 'export'])->name('orders.export');
-
-        // Route pour mettre à jour le statut
         Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+        Route::get('/orders/{order}/invoice', [OrderController::class, 'invoice'])->name('invoice');
+
     });
+
+
 // ----------------------------------------------------------------------
 // 2. Routes pour la Connexion et la Déconnexion de l'Administrateur
 // ----------------------------------------------------------------------
