@@ -103,7 +103,7 @@
                                     </div>
                                 </td>
                                 <td class="align-middle fw-semibold">
-                                    {{ number_format($order->total, 2) }} €
+                                    {{ number_format($order->total, 2) }} DT
                                 </td>
                                 <td class="align-middle">
                                     <form action="{{ route('admin.orders.update-status', $order) }}" method="POST" class="d-inline">

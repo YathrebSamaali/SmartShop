@@ -145,6 +145,7 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
     });
 
 
+
 // ----------------------------------------------------------------------
 // 2. Routes pour la Connexion et la Déconnexion de l'Administrateur
 // ----------------------------------------------------------------------

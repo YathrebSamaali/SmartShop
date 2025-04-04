@@ -3,62 +3,108 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
-use App\Models\Order;    // Table orders
-use App\Models\Product;  // Table products
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
-        // Statistiques de base
-        $stats = [
-            'usersCount' => User::count(),
-            'ordersCount' => Order::count(),
-            'productsCount' => Product::count(),
-            'revenue' => Order::sum('total') // Utilisation du champ 'total' de la table orders
+        // Calcul des statistiques clients
+        $totalCustomers = User::where('role', 'customer')->count();
+        $lastMonthCustomers = User::where('role', 'customer')
+            ->where('created_at', '>=', Carbon::now()->subMonth())
+            ->count();
+        $customerGrowth = $lastMonthCustomers > 0
+            ? round(($totalCustomers - $lastMonthCustomers) / $lastMonthCustomers * 100, 2)
+            : 0;
+
+        // Calcul des statistiques produits
+        $totalProducts = Product::count();
+        $inStockProducts = Product::where('stock', '>', 5)->count();
+        $lowStockProducts = Product::where('stock', '<=', 5)->where('stock', '>', 0)->count();
+
+        // Calcul des statistiques commandes
+        $totalOrders = Order::count();
+        $lastMonthOrders = Order::where('created_at', '>=', Carbon::now()->subMonth())->count();
+        $orderGrowth = $lastMonthOrders > 0
+            ? round(($totalOrders - $lastMonthOrders) / $lastMonthOrders * 100, 2)
+            : 0;
+
+        // Calcul des revenus
+        $totalRevenue = Order::where('status', '!=', 'cancelled')->sum('total');
+        $monthlyRevenue = Order::where('status', '!=', 'cancelled')
+            ->where('created_at', '>=', Carbon::now()->startOfMonth())
+            ->sum('total');
+        $weeklyRevenue = Order::where('status', '!=', 'cancelled')
+            ->where('created_at', '>=', Carbon::now()->startOfWeek())
+            ->sum('total');
+
+        // Répartition du revenu
+        $revenueBreakdown = [
+            'products' => Order::where('status', '!=', 'cancelled')->sum('subtotal'),
+            'shipping' => Order::where('status', '!=', 'cancelled')->sum('delivery_cost'),
+            'taxes' => Order::where('status', '!=', 'cancelled')->sum('tax_amount')
         ];
 
-        // Calcul des tendances (simplifié)
-        $growth = [
-            'users' => $this->calculateGrowth(User::class),
-            'orders' => $this->calculateGrowth(Order::class),
-            'products' => $this->calculateGrowth(Product::class),
-            'revenue' => $this->calculateRevenueGrowth()
+        // Données pour le graphique des ventes
+        $salesData = Order::select(
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('SUM(total) as total')
+            )
+            ->where('status', '!=', 'cancelled')
+            ->where('created_at', '>=', Carbon::now()->subYear())
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        $salesChart = [
+            'labels' => [],
+            'data' => []
         ];
 
-        // Dernières commandes (remplace l'activité récente)
-        $recentOrders = Order::with('user')
-                          ->latest()
-                          ->take(5)
-                          ->get();
+        foreach ($salesData as $sale) {
+            $date = Carbon::createFromDate($sale->year, $sale->month, 1);
+            $salesChart['labels'][] = $date->format('M Y');
+            $salesChart['data'][] = $sale->total;
+        }
 
-        // Produits avec stock faible
-        $lowStockProducts = Product::where('stock', '<', 10)
-                                 ->orderBy('stock')
-                                 ->take(5)
-                                 ->get();
+        // Commandes récentes
+        $recentOrders = Order::with('items')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
 
-        return view('admin.dashboard', array_merge($stats, $growth, [
-            'recentOrders' => $recentOrders,
-            'lowStockProducts' => $lowStockProducts
-        ]));
-    }
+        // Produits les plus vendus
+        $topProducts = Product::select('products.*', DB::raw('SUM(order_items.quantity) as total_sold'))
+            ->join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.status', '!=', 'cancelled')
+            ->groupBy('products.id')
+            ->orderBy('total_sold', 'desc')
+            ->take(5)
+            ->get();
 
-    private function calculateGrowth($model)
-    {
-        $current = $model::whereMonth('created_at', now()->month)->count();
-        $previous = $model::whereMonth('created_at', now()->subMonth()->month)->count();
-
-        return $previous > 0 ? round(($current - $previous) / $previous * 100, 2) : 0;
-    }
-
-    private function calculateRevenueGrowth()
-    {
-        $current = Order::whereMonth('created_at', now()->month)->sum('total');
-        $previous = Order::whereMonth('created_at', now()->subMonth()->month)->sum('total');
-
-        return $previous > 0 ? round(($current - $previous) / $previous * 100, 2) : 0;
+        return view('admin.dashboard', compact(
+            'totalCustomers',
+            'customerGrowth',
+            'totalProducts',
+            'inStockProducts',
+            'lowStockProducts',
+            'totalOrders',
+            'orderGrowth',
+            'totalRevenue',
+            'monthlyRevenue',
+            'weeklyRevenue',
+            'revenueBreakdown',
+            'salesChart',
+            'recentOrders',
+            'topProducts'
+        ));
     }
 }

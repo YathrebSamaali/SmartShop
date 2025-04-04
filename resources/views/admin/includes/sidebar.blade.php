@@ -43,31 +43,21 @@
                 <span class="badge bg-warning ms-auto">{{ App\Models\Order::count() }}</span>
             </a>
         </li>
-        <li class="nav-item mb-2">
-            <a href="{{ route('admin.settings') }}" class="nav-link text-white d-flex align-items-center hover-effect">
-                <i class="fas fa-cogs me-3 fs-5"></i>
-                <span class="fs-6">Settings</span>
-                <i class="fas fa-chevron-right ms-auto fs-6"></i>
-            </a>
-        </li>
+
     </ul>
 
     <!-- Logout Section -->
-    <div class="mt-auto pt-3 border-top border-secondary">
-        <a href="{{ route('admin.logout') }}" class="nav-link text-white d-flex align-items-center hover-effect logout-btn">
+   <!-- Logout Section - Version POST avec même design -->
+<div class="mt-auto pt-3 border-top border-secondary">
+    <form action="{{ route('admin.logout') }}" method="POST" class="w-100">
+        @csrf
+        <button type="submit" class="nav-link text-white d-flex align-items-center hover-effect logout-btn w-100 bg-transparent border-0 text-start">
             <i class="fas fa-sign-out-alt me-3 fs-5"></i>
             <span class="fs-6">Logout</span>
             <i class="fas fa-chevron-right ms-auto fs-6"></i>
-        </a>
-    </div>
-
-    <!-- Replace any GET logout links with a POST form -->
-<form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
-    @csrf
-    <button type="submit" class="btn btn-link text-decoration-none">
-        <i class="fas fa-sign-out-alt"></i> Déconnexion
-    </button>
-</form>
+        </button>
+    </form>
+</div>
 </div>
 
 <style>

@@ -131,6 +131,68 @@
     });
 </script>
 
+
+<section class="services py-16 bg-gray-100 relative">
+    <!-- Ligne horizontale en haut - épaissie -->
+    <div class="absolute top-0 left-0 right-0 border-t-4 border-[#000]"></div>
+
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Fast Delivery -->
+            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
+                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Fast Delivery</h3>
+                <p class="text-gray-600">Get your order in 2-3 business days</p>
+            </div>
+
+            <!-- Quality Guarantee -->
+            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
+                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Quality Guarantee</h3>
+                <p class="text-gray-600">Premium materials and craftsmanship</p>
+            </div>
+
+            <!-- Secure Checkout -->
+            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
+                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Secure Checkout</h3>
+                <p class="text-gray-600">256-bit SSL encryption</p>
+            </div>
+
+            <!-- Loyalty Rewards -->
+            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
+                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Loyalty Rewards</h3>
+                <p class="text-gray-600">Earn points with every purchase</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ligne horizontale en bas - épaissie -->
+    <div class="absolute bottom-0 left-0 right-0 border-t-4 border-[#000]"></div>
+</section>
+
+
+
 <section id="new-collection" class="py-16 bg-gray-100">
     <div class="container mx-auto px-4">
 
@@ -341,62 +403,7 @@
 
 
 
-<section class="services py-16 bg-gray-100">
-    <div class="container mx-auto px-4">
-    <h2 class="text-5xl font-bold text-center mb-8" style="font-family: 'Playfair Display', serif; color: #543929;">
-            Why Choose Us
-        </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Fast Delivery -->
-            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
-                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Fast Delivery</h3>
-                <p class="text-gray-600">Get your order in 2-3 business days</p>
-            </div>
-
-            <!-- Quality Guarantee -->
-            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
-                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Quality Guarantee</h3>
-                <p class="text-gray-600">Premium materials and craftsmanship</p>
-            </div>
-
-            <!-- Secure Checkout -->
-            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
-                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Secure Checkout</h3>
-                <p class="text-gray-600">256-bit SSL encryption</p>
-            </div>
-
-            <!-- Loyalty Rewards -->
-            <div class="service-card p-6 text-center border border-gray-100 rounded-lg hover:border-[#543929] transition-all duration-300">
-                <div class="icon-container w-20 h-20 mx-auto mb-4 rounded-full bg-[#543929]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#543929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Loyalty Rewards</h3>
-                <p class="text-gray-600">Earn points with every purchase</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Quick View Modal -->
 <!-- Quick View Modal -->
@@ -543,7 +550,7 @@ document.addEventListener('DOMContentLoaded', function() {
             type === 'error' ? 'bg-red-500' :
             type === 'warning' ? 'bg-yellow-500' : 'bg-green-500'
         } z-50 shadow-lg flex items-center`;
-        
+
         // Ajout d'une icône de validation
         toast.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -551,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </svg>
             ${message}
         `;
-        
+
         document.body.appendChild(toast);
 
         // Animation d'entrée
@@ -574,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const updateCartCounter = (count) => {
         if (elements.cartCount) {
             elements.cartCount.textContent = count;
-            
+
             // Animation
             elements.cartCount.classList.add('animate-ping');
             setTimeout(() => {
@@ -668,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToCart = async (productId) => {
         try {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-            
+
             const response = await fetch(API_ENDPOINTS.addToCart, {
                 method: 'POST',
                 headers: {
@@ -676,9 +683,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    product_id: productId, 
-                    quantity: 1 
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: 1
                 })
             });
 
@@ -692,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateCartCounter(data.cart_count);
                 showToast('Produit ajouté au panier!');
                 closeModal();
-                
+
                 // Émettre un événement personnalisé
                 document.dispatchEvent(new CustomEvent('cartUpdated', {
                     detail: { count: data.cart_count }
@@ -717,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const handleUnauthenticatedUser = (productId) => {
         // Sauvegarder le produit pour après connexion
         localStorage.setItem('pendingCartProduct', productId);
-        
+
         showToast('Veuillez vous connecter pour ajouter au panier', 'warning');
 
         // Rediriger vers la page de connexion
