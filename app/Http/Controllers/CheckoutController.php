@@ -81,8 +81,7 @@ class CheckoutController extends Controller
             $this->clearCart();
             DB::commit();
 
-            return redirect()->route('checkout.confirmation', $order->order_number)
-                           ->with('success', 'Commande validée avec succès!');
+            return redirect()->route('checkout.confirmation', $order->order_number);
 
         } catch (\Exception $e) {
             DB::rollBack();

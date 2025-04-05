@@ -378,33 +378,6 @@
     </div>
 </section>
 
-<style>
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-    }
-    .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-</style>
-
-<script>
-    // Simple carousel navigation
-    document.querySelector('.collection-next').addEventListener('click', () => {
-        const container = document.querySelector('.overflow-x-auto');
-        container.scrollBy({ left: 300, behavior: 'smooth' });
-    });
-
-    document.querySelector('.collection-prev').addEventListener('click', () => {
-        const container = document.querySelector('.overflow-x-auto');
-        container.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-</script>
-
-
-
-
-
 <!-- Quick View Modal -->
 <!-- Quick View Modal -->
 <div id="quickViewModal" class="fixed inset-0 z-50 hidden overflow-y-auto" data-redirect-url="{{ route('cart') }}">
@@ -434,41 +407,43 @@
                         <!-- Price Section -->
                         <div class="mt-4 bg-gray-50 p-4 rounded-lg">
                             <div class="flex items-center justify-between">
-                                <span class="text-lg font-medium text-gray-700">Prix:</span>
+                                <span class="text-lg font-medium text-gray-700">Price:</span>
                                 <div class="flex items-center">
                                     <span id="modalProductPrice" class="text-2xl font-bold text-[#543929]"></span>
                                     <span id="modalProductOldPrice" class="text-lg text-gray-500 line-through ml-3 hidden"></span>
                                 </div>
                             </div>
                             <div class="mt-2 flex items-center justify-between">
-                                <span class="text-sm text-gray-600">Disponibilité:</span>
+                                <span class="text-sm text-gray-600">Availability:</span>
                                 <span id="modalProductStock" class="text-sm font-medium text-green-600"></span>
                             </div>
                         </div>
 
                         <!-- Description Section -->
                         <div class="mt-6">
-                            <h4 class="text-lg font-semibold text-[#3a2a1d] mb-2">Description du produit</h4>
+                            <h4 class="text-lg font-semibold text-[#3a2a1d] mb-2">Product Description</h4>
                             <div id="modalProductDescription" class="text-gray-600">
                                 <!-- Description will be inserted here -->
                             </div>
                         </div>
 
-                        <!-- Options (taille, couleur, etc.) - Ces sections seront masquées si non pertinentes -->
-                        <div id="sizeOptionsContainer" class="mt-6 hidden">
+                        <!-- Size Options -->
+                        <div id="sizeOptionsContainer" class="mt-6">
                             <div class="mb-4">
-                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-2">Taille</h4>
+                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-3">Available Sizes</h4>
                                 <div id="sizeOptions" class="flex flex-wrap gap-2">
-                                    <!-- Options de taille seront insérées ici si disponibles -->
+                                    <!-- Options will be injected here -->
                                 </div>
+                                <p class="text-xs text-gray-500 mt-2">Size Guide</p>
                             </div>
                         </div>
 
-                        <div id="colorOptionsContainer" class="mt-6 hidden">
+                        <!-- Color Options -->
+                        <div id="colorOptionsContainer" class="mt-4">
                             <div class="mb-4">
-                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-2">Couleur</h4>
-                                <div id="colorOptions" class="flex flex-wrap gap-2">
-                                    <!-- Options de couleur seront insérées ici si disponibles -->
+                                <h4 class="text-md font-semibold text-[#3a2a1d] mb-3">Available Colors</h4>
+                                <div id="colorOptions" class="flex flex-wrap gap-3 items-center">
+                                    <!-- Options will be injected here -->
                                 </div>
                             </div>
                         </div>
@@ -479,7 +454,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                                 </svg>
-                                Ajouter au panier
+                                Add to Cart
                             </button>
                         </div>
                     </div>
@@ -489,6 +464,86 @@
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sample data - replace with your actual data
+    const sizeOptions = [
+        { value: 'xs', label: 'XS', available: false },
+        { value: 's', label: 'S', available: true },
+        { value: 'm', label: 'M', available: true },
+        { value: 'l', label: 'L', available: true },
+        { value: 'xl', label: 'XL', available: true }
+    ];
+
+    const colorOptions = [
+        { value: 'noir', label: 'Noir', hex: '#000000', available: true },
+        { value: 'bleu', label: 'Bleu', hex: '#2563eb', available: true },
+        { value: 'rouge', label: 'Rouge', hex: '#dc2626', available: false },
+        { value: 'vert', label: 'Vert', hex: '#10b981', available: true }
+    ];
+
+    // Inject size options
+    const sizeContainer = document.getElementById('sizeOptions');
+    sizeOptions.forEach(size => {
+        sizeContainer.innerHTML += `
+            <label class="size-option">
+                <input type="radio" name="size" value="${size.value}"
+                       class="hidden peer" ${size.available ? '' : 'disabled'}>
+                <span class="size-label">${size.label}</span>
+            </label>
+        `;
+    });
+
+    // Inject color options
+    const colorContainer = document.getElementById('colorOptions');
+    colorOptions.forEach(color => {
+        colorContainer.innerHTML += `
+            <label class="color-option relative">
+                <input type="radio" name="color" value="${color.value}"
+                       class="hidden peer" ${color.available ? '' : 'disabled'}>
+                <span class="color-label" style="background-color: ${color.hex}"></span>
+                <span class="color-name">${color.label}</span>
+            </label>
+        `;
+    });
+
+    // Add to cart functionality
+    document.getElementById('addToCartBtn').addEventListener('click', function() {
+        const selectedSize = document.querySelector('input[name="size"]:checked');
+        const selectedColor = document.querySelector('input[name="color"]:checked');
+
+        if (!selectedSize) {
+    showToast('Please select a size', 'error'); // Using your existing toast function
+    return;
+}
+
+if (!selectedColor) {
+    showToast('Please select a color', 'error');
+    return;
+}
+
+        // Here you would normally add to cart
+        console.log('Adding to cart:', {
+            size: selectedSize.value,
+            color: selectedColor.value
+        });
+
+        // Redirect to cart page
+    });
+});
+</script>
+<script>
+    // Simple carousel navigation
+    document.querySelector('.collection-next').addEventListener('click', () => {
+        const container = document.querySelector('.overflow-x-auto');
+        container.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+
+    document.querySelector('.collection-prev').addEventListener('click', () => {
+        const container = document.querySelector('.overflow-x-auto');
+        container.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Éléments DOM
@@ -793,6 +848,74 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<style>
+.scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+.scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+/* Style for size options */
+.size-option {
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+.size-label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    min-width: 2.5rem;
+    text-align: center;
+}
+.size-label:hover {
+    border-color: #9ca3af;
+}
+.peer:checked + .size-label {
+    background-color: #3a2a1d;
+    color: white;
+    border-color: #3a2a1d;
+}
+.peer:disabled + .size-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Style for color options */
+.color-option {
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+.color-label {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid #e5e7eb;
+    transition: all 0.2s ease;
+    position: relative;
+}
+.color-label:hover {
+    transform: scale(1.1);
+}
+.peer:checked + .color-label {
+    border-color: #3a2a1d;
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #3a2a1d;
+}
+.color-name {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #6b7280;
+    white-space: nowrap;
+}
+</style>
 
     <!-- Footer Section -->
     @include('layouts.footer')

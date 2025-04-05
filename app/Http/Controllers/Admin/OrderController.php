@@ -34,7 +34,7 @@ class OrderController extends Controller
             })
             ->with(['orderItems.product'])
             ->latest()
-            ->paginate();
+            ->paginate(5);
 
         return view('admin.orders.index', compact('orders'));
     }

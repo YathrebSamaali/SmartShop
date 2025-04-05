@@ -25,9 +25,9 @@
                 <p>Order #: {{ $order->order_number }}</p>
             </div>
             <div class="company-info">
-                <h2>Your Company Name</h2>
-                <p>123 Business Street<br>
-                City, Country<br>
+                <h2>SmartShop</h2>
+                <p>el kef<br>
+                el kef,  tunisie<br>
                 VAT: XXXXXXXX</p>
             </div>
         </div>

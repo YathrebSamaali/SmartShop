@@ -3,15 +3,14 @@
 @section('content')
 <div class="content-wrapper" style="background-color: #f8f9fa; margin-left:250px; padding: 20px;">
     <div class="container-fluid">
-        <!-- En-tête amélioré avec breadcrumbs -->
+        <!-- Enhanced header with breadcrumbs -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-
-                <h1 class="h3 mb-1 text-gray-800">Gestion des Commandes</h1>
-                <p class="text-muted mb-0">{{ $orders->total() }} commande(s) trouvée(s)</p>
+                <h1 class="h3 mb-1 text-gray-800">Order Management</h1>
+                <p class="text-muted mb-0">{{ $orders->total() }} order(s) found</p>
             </div>
 
-            <!-- Barre de recherche améliorée -->
+            <!-- Enhanced search bar -->
             <div class="d-flex align-items-center">
                 <form method="GET" action="{{ route('admin.orders.index') }}" class="d-flex align-items-center mt-3">
                     <div class="input-group search-container" style="width: 250px;">
@@ -37,12 +36,10 @@
                         @endif
                     </div>
                 </form>
-
-
             </div>
         </div>
 
-        <!-- Alertes -->
+        <!-- Alerts -->
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
             <div class="d-flex align-items-center">
@@ -50,7 +47,7 @@
                 <div>
                     {{ session('success') }}
                     @if(session('order_id'))
-                    <a href="{{ route('admin.orders.show', session('order_id')) }}" class="alert-link ms-2">Voir la commande</a>
+                    <a href="{{ route('admin.orders.show', session('order_id')) }}" class="alert-link ms-2">View order</a>
                     @endif
                 </div>
             </div>
@@ -58,24 +55,21 @@
         </div>
         @endif
 
-        <!-- Carte principale -->
+        <!-- Main card -->
         <div class="card shadow-sm border-0">
             @if($orders->count() > 0)
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
-
-
-                            <thead class="bg-solid from-blue-50 to-indigo-50">
+                        <thead class="bg-solid from-blue-50 to-indigo-50">
                             <tr>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">N° Commande</th>
-                                <th scope="col"  class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Client</th>
-                                <th scope="col"  class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">adesse</th>
-                                <th scope="col"  class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">montant</th>
-                                <th scope="col"  class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">statut</th>
-                                <th scope="col"  class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">paiment</th>
-                                <th scope="col"  class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">date</th>
-                                <th scope="col"  class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">action</th>
-
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Order #</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Customer</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Address</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Amount</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-semibold text-indigo-800 uppercase tracking-wider">Payment</th>
+                                <th scope="col" class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">Date</th>
+                                <th scope="col" class="px-4 py-3 text-right text-xs font-semibold text-indigo-800 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,13 +80,11 @@
                                     <small class="text-muted">Ref: {{ $order->id }}</small>
                                 </td>
                                 <td class="align-middle">
-
-                                        <div class="flex-grow-1 ms-3">
-                                            <div class="fw-medium">{{ $order->customer_first_name }} {{ $order->customer_last_name }}</div>
-                                            <div class="text-muted small">{{ $order->customer_email }}</div>
-                                            <div class="text-muted small">{{ $order->customer_phone ?? 'N/A' }}</div>
-                                        </div>
-
+                                    <div class="flex-grow-1 ms-3">
+                                        <div class="fw-medium">{{ $order->customer_first_name }} {{ $order->customer_last_name }}</div>
+                                        <div class="text-muted small">{{ $order->customer_email }}</div>
+                                        <div class="text-muted small">{{ $order->customer_phone ?? 'N/A' }}</div>
+                                    </div>
                                 </td>
                                 <td class="align-middle">
                                     <div class="small">
@@ -112,7 +104,7 @@
                                                 onchange="this.form.submit()"
                                                 class="form-select form-select-sm status-select status-{{ $order->status }}"
                                                 style="width: auto; display: inline-block;">
-                                            @foreach(['pending' => 'En attente', 'processing' => 'En traitement', 'completed' => 'Terminé', 'cancelled' => 'Annulé'] as $value => $label)
+                                            @foreach(['pending' => 'Pending', 'processing' => 'Processing', 'completed' => 'Completed', 'cancelled' => 'Cancelled'] as $value => $label)
                                             <option value="{{ $value }}" {{ $order->status === $value ? 'selected' : '' }}>{{ $label }}</option>
                                             @endforeach
                                         </select>
@@ -132,7 +124,7 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="small text-muted">
-                                        {{ $order->created_at->format('d/m/Y') }}
+                                        {{ $order->created_at->format('m/d/Y') }}
                                         <div class="text-muted">{{ $order->created_at->format('H:i') }}</div>
                                     </div>
                                 </td>
@@ -145,7 +137,7 @@
                                         </a>
                                         <a href="{{ route('admin.invoice', $order) }}"
                                         class="text-green-600 p-1"
-                                           title="invoice">
+                                           title="Invoice">
                                             <i class="fas fa-file-pdf"></i>
                                         </a>
                                         <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" class="d-inline">
@@ -166,13 +158,13 @@
                     </table>
                 </div>
 
-                <!-- Pagination améliorée -->
+                <!-- Enhanced pagination -->
                 @if($orders->hasPages())
                 <div class="card-footer bg-white border-top">
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
                         <div class="mb-2 mb-md-0">
                             <p class="mb-0 text-muted">
-                                Affichage de <span class="fw-semibold">{{ $orders->firstItem() }}</span> à <span class="fw-semibold">{{ $orders->lastItem() }}</span> sur <span class="fw-semibold">{{ $orders->total() }}</span> commandes
+                                Showing <span class="fw-semibold">{{ $orders->firstItem() }}</span> to <span class="fw-semibold">{{ $orders->lastItem() }}</span> of <span class="fw-semibold">{{ $orders->total() }}</span> orders
                             </p>
                         </div>
                         <div>
@@ -187,17 +179,17 @@
                         <div class="empty-state-icon bg-light-primary">
                             <i class="fas fa-shopping-cart fa-3x text-primary"></i>
                         </div>
-                        <h3 class="mt-4">Aucune commande trouvée</h3>
+                        <h3 class="mt-4">No orders found</h3>
                         <p class="text-muted mb-4">
                             @if(request('search'))
-                            Votre recherche "{{ request('search') }}" n'a retourné aucun résultat.
+                            Your search for "{{ request('search') }}" returned no results.
                             @else
-                            Aucune commande n'est enregistrée pour le moment.
+                            No orders have been recorded yet.
                             @endif
                         </p>
                         @if(request('search') || request('status') || request('payment'))
                         <a href="{{ route('admin.orders.index') }}" class="btn btn-primary">
-                            <i class="fas fa-undo me-2"></i> Réinitialiser les filtres
+                            <i class="fas fa-undo me-2"></i> Reset filters
                         </a>
                         @endif
                     </div>
@@ -245,31 +237,30 @@
     width: 120px;
 }
 .search-container {
-    border: 1px solid #212529; /* Black border */
+    border: 1px solid #212529;
     border-radius: 6px;
     overflow: hidden;
-    background-color: transparent; /* Transparent background */
+    background-color: transparent;
     transition: all 0.3s ease;
     margin-right: 10px;
 }
 .search-container:focus-within {
-    box-shadow: 0 0 0 2px rgba(33, 37, 41, 0.25); /* Focus effect */
+    box-shadow: 0 0 0 2px rgba(33, 37, 41, 0.25);
 }
 
 .search-container .input-group-text {
-    background-color: transparent !important; /* Transparent background */
+    background-color: transparent !important;
     border-right: none !important;
-    border-color: #212529 !important; /* Black border */
+    border-color: #212529 !important;
 }
 
 .search-container .form-control {
-    background-color: transparent !important; /* Transparent background */
-    border-color: #212529 !important; /* Black border */
+    background-color: transparent !important;
+    border-color: #212529 !important;
     border-left: none !important;
     box-shadow: none !important;
 }
 .form-control {
-
     font-size: 0.95rem;
     height: 38px;
     border: 1px solid #212529 !important;
@@ -287,7 +278,6 @@
     cursor: pointer;
     color: #dc3545 !important;
 }
-
 
 .clear-search-btn i {
     font-size: 0.9rem;
@@ -323,13 +313,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation des tooltips Bootstrap
+    // Initialize Bootstrap tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    // Recherche instantanée
+    // Instant search
     const searchInput = document.getElementById('instantSearchInput');
     if (searchInput) {
         let searchTimer;
@@ -349,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fermeture automatique des alertes
+    // Auto-close alerts
     const alertMessage = document.querySelector('.alert');
     if (alertMessage) {
         setTimeout(function() {
