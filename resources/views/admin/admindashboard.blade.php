@@ -298,11 +298,7 @@
                                     <span class="badge bg-primary rounded-pill">65 ventes</span>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="mb-1">Bottes en Cuir</h6>
-                                        <small class="text-muted">Chaussures</small>
-                                    </div>
-                                    <span class="badge bg-primary rounded-pill">54 ventes</span>
+
                                 </a>
                             </div>
                         </div>
