@@ -43,21 +43,8 @@
                 <span class="badge bg-warning ms-auto">{{ App\Models\Order::count() }}</span>
             </a>
         </li>
-        <li class="nav-item mb-2">
-            <a href="" class="nav-link text-white d-flex align-items-center hover-effect">
-                <i class="fas fa-chart-bar me-3 fs-5"></i>
-                <span class="fs-6">Reports & Analytics</span>
-                <i class="fas fa-chevron-right ms-auto fs-6"></i>
-            </a>
-        </li>
 
-        <li class="nav-item mb-2">
-            <a href="" class="nav-link text-white d-flex align-items-center hover-effect">
-                <i class="fas fa-cog me-3 fs-5"></i>
-                <span class="fs-6">System Settings</span>
-                <i class="fas fa-chevron-right ms-auto fs-6"></i>
-            </a>
-        </li>
+
 
         <li class="nav-item mb-2">
             <a href="" class="nav-link text-white d-flex align-items-center hover-effect">
@@ -67,7 +54,7 @@
             </a>
         </li>
 
-      
+
 
     </ul>
 
