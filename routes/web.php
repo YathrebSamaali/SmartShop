@@ -15,7 +15,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Product;
 use App\Models\Contact;
-
+use App\Http\Controllers\Admin\AdminMessageController;
 
 
 Route::get('/', function () {
@@ -144,6 +144,18 @@ Route::prefix('admin')                       // Préfixe 'admin' pour toutes les
 
     });
 
+
+
+
+// Page de contact
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+    Route::delete('/messages/{id}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/messages/{id}', [AdminMessageController::class, 'show'])->name('messages.show');
+    
+});
 
 
 // ----------------------------------------------------------------------

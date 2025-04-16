@@ -66,28 +66,28 @@
                 @foreach($order->orderItems as $item)
                 <tr>
                     <td>{{ $item->product->name ?? 'Product' }}</td>
-                    <td>{{ number_format($item->price, 2) }} €</td>
+                    <td>{{ number_format($item->price, 2) }} DT</td>
                     <td>{{ $item->quantity }}</td>
-                    <td class="text-right">{{ number_format($item->price * $item->quantity, 2) }} €</td>
+                    <td class="text-right">{{ number_format($item->price * $item->quantity, 2) }} DT</td>
                 </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr class="total-row">
                     <td colspan="3" class="text-right">Subtotal:</td>
-                    <td class="text-right">{{ number_format($order->subtotal, 2) }} €</td>
+                    <td class="text-right">{{ number_format($order->subtotal, 2) }} DT</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-right">Delivery Cost:</td>
-                    <td class="text-right">{{ number_format($order->delivery_cost, 2) }} €</td>
+                    <td class="text-right">{{ number_format($order->delivery_cost, 2) }} DT</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-right">Tax:</td>
-                    <td class="text-right">{{ number_format($order->tax_amount, 2) }} €</td>
+                    <td class="text-right">{{ number_format($order->tax_amount, 2) }} DT</td>
                 </tr>
                 <tr class="total-row">
                     <td colspan="3" class="text-right">Total:</td>
-                    <td class="text-right">{{ number_format($order->total, 2) }} €</td>
+                    <td class="text-right">{{ number_format($order->total, 2) }} DT</td>
                 </tr>
             </tfoot>
         </table>

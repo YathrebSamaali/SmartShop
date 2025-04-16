@@ -47,11 +47,12 @@
 
 
         <li class="nav-item mb-2">
-            <a href="" class="nav-link text-white d-flex align-items-center hover-effect">
-                <i class="fas fa-envelope me-3 fs-5"></i>
-                <span class="fs-6">Messages</span>
-                <span class="badge bg-danger ms-auto">5</span>
-            </a>
+        <a href="{{ route('admin.messages.index') }}" class="nav-link text-white d-flex align-items-center hover-effect">
+    <i class="fas fa-envelope me-3 fs-5"></i>
+    <span class="fs-6">Messages</span>
+    <span class="badge bg-danger ms-auto">{{ App\Models\Message::count() }}</span>
+</a>
+
         </li>
 
 
