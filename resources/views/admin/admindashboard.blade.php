@@ -92,10 +92,8 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted mb-2">Utilisateurs</h6>
-                                    <h2 class="mb-0">1,248</h2>
-                                    <p class="text-success mb-0">
-                                        <span class="fas fa-arrow-up"></span> 12.5%
-                                    </p>
+                                    <h2 class="mb-0">48</h2>
+                                   
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon-shape bg-primary text-white rounded-circle">
@@ -113,10 +111,8 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted mb-2">Produits</h6>
-                                    <h2 class="mb-0">356</h2>
-                                    <p class="text-success mb-0">
-                                        <span class="fas fa-arrow-up"></span> 5.3%
-                                    </p>
+                                    <h2 class="mb-0">35</h2>
+                                  
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon-shape bg-success text-white rounded-circle">
@@ -134,10 +130,8 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted mb-2">Commandes</h6>
-                                    <h2 class="mb-0">1,024</h2>
-                                    <p class="text-danger mb-0">
-                                        <span class="fas fa-arrow-down"></span> 3.2%
-                                    </p>
+                                    <h2 class="mb-0">40</h2>
+                                 
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon-shape bg-warning text-white rounded-circle">
@@ -155,10 +149,8 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted mb-2">Revenu</h6>
-                                    <h2 class="mb-0">€24,780</h2>
-                                    <p class="text-success mb-0">
-                                        <span class="fas fa-arrow-up"></span> 8.1%
-                                    </p>
+                                    <h2 class="mb-0"> DT 7424,780</h2>
+                                 
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon-shape bg-danger text-white rounded-circle">
