@@ -92,7 +92,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted mb-2">Utilisateurs</h6>
-                                    <h2 class="mb-0">48</h2>
+                                    <h2 class="mb-0">148</h2>
                                    
                                 </div>
                                 <div class="col-auto">
@@ -192,60 +192,61 @@
             </div>
 
             <!-- Recent Orders & Top Products -->
-            <div class="row">
+      <!-- Recent Orders & Top Products -->
+      <div class="row">
                 <div class="col-lg-8 mb-4">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Commandes récentes</h6>
-                            <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-link">Voir tout</a>
+                            <h6 class="m-0 font-weight-bold text-primary">Recent Orders</h6>
+                            <a href="#" class="btn btn-sm btn-link">View All</a>
                         </div>
                         <div class="card-body recent-orders">
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>N° Commande</th>
-                                            <th>Client</th>
-                                            <th>Montant</th>
-                                            <th>Statut</th>
+                                            <th>Order #</th>
+                                            <th>Customer</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
                                             <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>#ORD-2023-0012</td>
-                                            <td>Jean Dupont</td>
-                                            <td>€125.99</td>
-                                            <td><span class="badge bg-success order-status-badge">Livré</span></td>
-                                            <td>15/06/2023</td>
+                                            <td>John Smith</td>
+                                            <td>$125.99</td>
+                                            <td><span class="badge bg-success order-status-badge">Delivered</span></td>
+                                            <td>Jun 15, 2023</td>
                                         </tr>
                                         <tr>
                                             <td>#ORD-2023-0011</td>
-                                            <td>Marie Lambert</td>
-                                            <td>€89.50</td>
-                                            <td><span class="badge bg-warning text-dark order-status-badge">En traitement</span></td>
-                                            <td>14/06/2023</td>
+                                            <td>Emily Johnson</td>
+                                            <td>$89.50</td>
+                                            <td><span class="badge bg-warning text-dark order-status-badge">Processing</span></td>
+                                            <td>Jun 14, 2023</td>
                                         </tr>
                                         <tr>
                                             <td>#ORD-2023-0010</td>
-                                            <td>Pierre Martin</td>
-                                            <td>€210.00</td>
-                                            <td><span class="badge bg-info order-status-badge">Expédié</span></td>
-                                            <td>13/06/2023</td>
+                                            <td>Michael Brown</td>
+                                            <td>$210.00</td>
+                                            <td><span class="badge bg-info order-status-badge">Shipped</span></td>
+                                            <td>Jun 13, 2023</td>
                                         </tr>
                                         <tr>
                                             <td>#ORD-2023-0009</td>
-                                            <td>Sophie Bernard</td>
-                                            <td>€56.75</td>
-                                            <td><span class="badge bg-danger order-status-badge">Annulé</span></td>
-                                            <td>12/06/2023</td>
+                                            <td>Sarah Wilson</td>
+                                            <td>$56.75</td>
+                                            <td><span class="badge bg-danger order-status-badge">Cancelled</span></td>
+                                            <td>Jun 12, 2023</td>
                                         </tr>
                                         <tr>
                                             <td>#ORD-2023-0008</td>
-                                            <td>Thomas Leroy</td>
-                                            <td>€175.30</td>
-                                            <td><span class="badge bg-primary order-status-badge">Nouveau</span></td>
-                                            <td>11/06/2023</td>
+                                            <td>David Taylor</td>
+                                            <td>$175.30</td>
+                                            <td><span class="badge bg-primary order-status-badge">New</span></td>
+                                            <td>Jun 11, 2023</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -256,45 +257,45 @@
                 <div class="col-lg-4 mb-4">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Produits populaires</h6>
-                            <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-link">Voir tout</a>
+                            <h6 class="m-0 font-weight-bold text-primary">Top Selling Products</h6>
+                            <a href="#" class="btn btn-sm btn-link">View All</a>
                         </div>
                         <div class="card-body">
                             <div class="list-group">
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">Smartphone X1</h6>
-                                        <small class="text-muted">Électronique</small>
+                                        <h6 class="mb-1">Women's Summer Dress</h6>
+                                        <small class="text-muted">Women's Clothing</small>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">128 ventes</span>
+                                    <span class="badge bg-primary rounded-pill">128 sales</span>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">Casque Audio Pro</h6>
-                                        <small class="text-muted">Accessoires</small>
+                                        <h6 class="mb-1">Men's Casual Shirt</h6>
+                                        <small class="text-muted">Men's Clothing</small>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">89 ventes</span>
+                                    <span class="badge bg-primary rounded-pill">89 sales</span>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">Montre Connectée</h6>
-                                        <small class="text-muted">Accessoires</small>
+                                        <h6 class="mb-1">Leather Sneakers</h6>
+                                        <small class="text-muted">Footwear</small>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">76 ventes</span>
+                                    <span class="badge bg-primary rounded-pill">76 sales</span>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">Sac à dos Urbain</h6>
-                                        <small class="text-muted">Mode</small>
+                                        <h6 class="mb-1">Denim Jacket</h6>
+                                        <small class="text-muted">Outerwear</small>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">65 ventes</span>
+                                    <span class="badge bg-primary rounded-pill">65 sales</span>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">Bottes en Cuir</h6>
-                                        <small class="text-muted">Chaussures</small>
+                                        <h6 class="mb-1">Silk Scarf</h6>
+                                        <small class="text-muted">Accessories</small>
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">54 ventes</span>
+                                    <span class="badge bg-primary rounded-pill">54 sales</span>
                                 </a>
                             </div>
                         </div>

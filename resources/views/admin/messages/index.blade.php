@@ -3,21 +3,21 @@
 @section('content')
 @include('admin.includes.sidebar')
 <div class="content" style="background-color: #f8f9fa; margin-left:250px; min-height:100vh; padding: 25px;">
-    <!-- En-tête amélioré avec boutons d'action -->
+    <!-- Enhanced header with action buttons -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="h3 mb-2 text-gray-800">Messages des utilisateurs</h1>
-            <p class="text-muted mb-0">Gestion des messages reçus</p>
+            <h1 class="h3 mb-2 text-gray-800">User Messages</h1>
+            <p class="text-muted mb-0">Management of received messages</p>
         </div>
         <div class="d-flex">
             <div class="dropdown me-2">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown">
-                    <i class="fas fa-filter me-1"></i> Filtrer
+                    <i class="fas fa-filter me-1"></i> Filter
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Tous les messages</a></li>
-                    <li><a class="dropdown-item" href="#">Non lus</a></li>
-                    <li><a class="dropdown-item" href="#">Archivés</a></li>
+                    <li><a class="dropdown-item" href="#">All messages</a></li>
+                    <li><a class="dropdown-item" href="#">Unread</a></li>
+                    <li><a class="dropdown-item" href="#">Archived</a></li>
                 </ul>
             </div>
             <div class="badge bg-primary p-2">
@@ -26,9 +26,7 @@
         </div>
     </div>
 
-
-
-    <!-- Tableau amélioré -->
+    <!-- Enhanced table -->
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -39,9 +37,9 @@
                                 <input type="checkbox" id="selectAll">
                             </th>
                             <th class="py-3 px-4" style="width:10%">#</th>
-                            <th class="py-3 px-4" style="width:15%">Nom</th>
+                            <th class="py-3 px-4" style="width:15%">Name</th>
                             <th class="py-3 px-4" style="width:20%">Email</th>
-                            <th class="py-3 px-4" style="width:15%">Sujet</th>
+                            <th class="py-3 px-4" style="width:15%">Subject</th>
                             <th class="py-3 px-4" style="width:30%">Message</th>
                             <th class="py-3 px-4 text-end" style="width:15%">Actions</th>
                         </tr>
@@ -80,18 +78,18 @@
         </div>
     </div>
 
-    <!-- Actions groupées -->
+    <!-- Bulk actions -->
     <div class="mt-3" id="bulkActions" style="display:none;">
         <div class="card shadow-sm">
             <div class="card-body py-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span id="selectedCount">0</span> message(s) sélectionné(s)
+                    <span id="selectedCount">0</span> message(s) selected
                     <div>
                         <button class="btn btn-sm btn-outline-danger me-2" id="deleteSelected">
-                            <i class="fas fa-trash-alt me-1"></i> Supprimer
+                            <i class="fas fa-trash-alt me-1"></i> Delete
                         </button>
                         <button class="btn btn-sm btn-outline-secondary" id="archiveSelected">
-                            <i class="fas fa-archive me-1"></i> Archiver
+                            <i class="fas fa-archive me-1"></i> Archive
                         </button>
                     </div>
                 </div>
@@ -102,24 +100,24 @@
     <!-- Pagination -->
     <div class="d-flex justify-content-between align-items-center mt-4">
         <div class="text-muted small">
-            Affichage de <span id="showingFrom">1</span> à <span id="showingTo">{{ count($messages) }}</span> sur <span id="totalMessages">{{ count($messages) }}</span> messages
+            Showing <span id="showingFrom">1</span> to <span id="showingTo">{{ count($messages) }}</span> of <span id="totalMessages">{{ count($messages) }}</span> messages
         </div>
         <nav>
             <ul class="pagination pagination-sm">
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Précédent</a>
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
                 </li>
                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#">Suivant</a>
+                    <a class="page-link" href="#">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
 
-    <!-- Modal de confirmation -->
+    <!-- Confirmation modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -128,18 +126,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBody">
-                    Êtes-vous sûr de vouloir supprimer ce message ?
+                    Are you sure you want to delete this message?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-danger" id="confirmAction">Confirmer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmAction">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Styles supplémentaires -->
+<!-- Additional styles -->
 <style>
     .table-hover tbody tr:hover {
         background-color: rgba(0,0,0,0.02);
@@ -170,26 +168,26 @@
     }
 </style>
 
-<!-- JavaScript professionnel -->
+<!-- Professional JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Sélection multiple
+    // Multiple selection
     const selectAll = document.getElementById('selectAll');
     const checkboxes = document.querySelectorAll('.message-checkbox');
     const bulkActions = document.getElementById('bulkActions');
     const selectedCount = document.getElementById('selectedCount');
 
-    // Recherche instantanée
+    // Instant search
     const searchInput = document.getElementById('messageSearch');
     const clearSearch = document.getElementById('clearSearch');
     const messagesTable = document.getElementById('messagesTable');
 
-    // Modal de confirmation
+    // Confirmation modal
     const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
     const confirmAction = document.getElementById('confirmAction');
     let currentAction = null;
 
-    // Sélection/désélection de tous les messages
+    // Select/deselect all messages
     selectAll.addEventListener('change', function() {
         checkboxes.forEach(checkbox => {
             checkbox.checked = this.checked;
@@ -197,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateBulkActions();
     });
 
-    // Mise à jour des actions groupées
+    // Update bulk actions
     function updateBulkActions() {
         const selected = document.querySelectorAll('.message-checkbox:checked').length;
         if (selected > 0) {
@@ -209,50 +207,50 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Écouteurs pour les cases à cocher
+    // Listeners for checkboxes
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateBulkActions);
     });
 
-    // Bouton de suppression
+    // Delete button
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', function() {
             const messageId = this.closest('tr').dataset.id;
             showConfirmationModal(
-                'Supprimer le message',
-                'Êtes-vous sûr de vouloir supprimer ce message ? Cette action est irréversible.',
+                'Delete message',
+                'Are you sure you want to delete this message? This action cannot be undone.',
                 () => {
-                    // Ici, vous ajouteriez la logique de suppression AJAX
-                    console.log('Suppression du message', messageId);
-                    // Simuler une suppression
+                    // Here you would add AJAX deletion logic
+                    console.log('Deleting message', messageId);
+                    // Simulate deletion
                     setTimeout(() => {
-                        alert('Message supprimé avec succès');
+                        alert('Message deleted successfully');
                     }, 500);
                 }
             );
         });
     });
 
-    // Actions groupées
+    // Bulk actions
     document.getElementById('deleteSelected').addEventListener('click', function() {
         const selected = Array.from(document.querySelectorAll('.message-checkbox:checked'))
                             .map(checkbox => checkbox.closest('tr').dataset.id);
         
         showConfirmationModal(
-            'Supprimer les messages sélectionnés',
-            `Êtes-vous sûr de vouloir supprimer ${selected.length} message(s) ? Cette action est irréversible.`,
+            'Delete selected messages',
+            `Are you sure you want to delete ${selected.length} message(s)? This action cannot be undone.`,
             () => {
-                // Logique de suppression groupée
-                console.log('Suppression des messages:', selected);
-                // Simuler une suppression
+                // Bulk deletion logic
+                console.log('Deleting messages:', selected);
+                // Simulate deletion
                 setTimeout(() => {
-                    alert(`${selected.length} message(s) supprimé(s) avec succès`);
+                    alert(`${selected.length} message(s) deleted successfully`);
                 }, 500);
             }
         );
     });
 
-    // Fonction pour afficher la modal de confirmation
+    // Function to show confirmation modal
     function showConfirmationModal(title, message, callback) {
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalBody').textContent = message;
@@ -265,12 +263,12 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmModal.show();
     }
 
-    // Recherche dans les messages
+    // Message search
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         clearSearch.style.display = searchTerm ? 'block' : 'none';
         
-        // Filtrage côté client (simplifié)
+        // Client-side filtering (simplified)
         document.querySelectorAll('#messagesTable tbody tr').forEach(row => {
             const text = row.textContent.toLowerCase();
             row.style.display = text.includes(searchTerm) ? '' : 'none';
@@ -279,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateShowingCount();
     });
 
-    // Effacer la recherche
+    // Clear search
     clearSearch.addEventListener('click', function() {
         searchInput.value = '';
         this.style.display = 'none';
@@ -289,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateShowingCount();
     });
 
-    // Mettre à jour le compteur d'affichage
+    // Update display counter
     function updateShowingCount() {
         const visibleRows = document.querySelectorAll('#messagesTable tbody tr').length;
         document.getElementById('showingTo').textContent = visibleRows;
