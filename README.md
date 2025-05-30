@@ -1,4 +1,4 @@
-# 🛒 SmartShop – Laravel 10 E-commerce Project
+# 🛒 SmartShop – Laravel E-commerce Project
 
 SmartShop is a complete e-commerce web application built with Laravel and MySQL. It features a user-friendly interface, secure authentication, and a basic product/cart/order system, making it an ideal starter template for building robust online stores.
 
@@ -47,7 +47,6 @@ The project uses:
 2. **Access the application**
     ````bash
     http://localhost:8000
-
 
 ## 👨‍💼 Screenshots
 
