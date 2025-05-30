@@ -46,7 +46,15 @@ The project uses:
     php artisan serve
 2. **Access the application**
     ````bash
-    http://localhost:8000
+    http://localhost:
+    
+> ⚠️ **Note:**  
+> To access the **admin login interface**, make sure to visit:  
+> [http://localhost:8000/admin](http://localhost:8000/admin)  
+> 
+> ✅ Default Admin Credentials:  
+> **Email:** `admin@smart.com`  
+> **Password:** `password123`
 
 ## 👨‍💼 Screenshots
 
